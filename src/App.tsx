@@ -4,13 +4,13 @@ import chakraTheme from './app/chakra';
 import CommonRoutes from './app/routes/CommonRoutes';
 
 const App = () => {
-    return (
-        <ChakraProvider theme={chakraTheme}>
-            <BrowserRouter>
-                <CommonRoutes />
-            </BrowserRouter>
-        </ChakraProvider>
-    );
+  return (
+    <ChakraProvider theme={chakraTheme}>
+      <BrowserRouter>
+        <CommonRoutes />
+      </BrowserRouter>
+    </ChakraProvider>
+  );
 };
 
 export default App;
