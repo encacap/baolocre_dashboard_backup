@@ -1,11 +1,16 @@
-import { Box, ChakraProvider } from '@chakra-ui/react';
+import { ChakraProvider } from '@chakra-ui/react';
+import { BrowserRouter } from 'react-router-dom';
+import chakraTheme from './app/chakra';
+import CommonRoutes from './app/routes/CommonRoutes';
 
-function App() {
+const App = () => {
     return (
-        <ChakraProvider>
-            <Box>Hello, World!</Box>
+        <ChakraProvider theme={chakraTheme}>
+            <BrowserRouter>
+                <CommonRoutes />
+            </BrowserRouter>
         </ChakraProvider>
     );
-}
+};
 
 export default App;
