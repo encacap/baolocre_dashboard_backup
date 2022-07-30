@@ -1,5 +1,6 @@
 export const AUTHENTICATION_PATH = {
   LOGIN_PATH: 'auth/login',
+  REDIRECT_AFTER_AUTH_PATH: '/',
 };
 
 export const ERROR_PATH = {

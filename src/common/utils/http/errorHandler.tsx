@@ -50,7 +50,7 @@ const errorHandler = async (
   if (redirectURL) {
     const currentURL = window.location.pathname;
     if (currentURL !== redirectURL) {
-      window.location.href = `${redirectURL}?redirectFrom=${currentURL}`;
+      window.location.href = `${redirectURL}?from=${currentURL}`;
     }
   }
 

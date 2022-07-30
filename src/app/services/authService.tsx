@@ -1,10 +1,10 @@
 import axiosInstance from '../../common/utils/http/axiosInstance';
 import { AUTHENTICATION_API_PATH } from '../constants/API';
+import { AuthResponseDataType } from '../types/auth';
 import { AuthTokensType, AxiosResponseType } from '../types/common';
-import { UserDataType } from '../types/data';
 
 const loginWithEmailAndPassword = (email: string, password: string) =>
-  axiosInstance.post<AxiosResponseType<UserDataType>>(
+  axiosInstance.post<AxiosResponseType<AuthResponseDataType>>(
     AUTHENTICATION_API_PATH.LOGIN_PATH,
     {
       email,

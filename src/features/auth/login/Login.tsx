@@ -13,10 +13,14 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { UNAUTHORIZED } from 'http-status';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { AUTHENTICATION_PATH } from '../../../app/constants/URL';
 import { authService } from '../../../app/services';
+import { setUser } from '../../../app/slices/userSlice';
 import { AxiosErrorType } from '../../../app/types/common';
 import Alert from '../../../common/Alert';
 import EncacapLogo from '../../../common/EncacapLogo';
+import useDispatch from '../../../common/hooks/useDispatch';
 import { loginFormDataSchema } from '../../../common/utils/validationSchemas/auth';
 
 interface LoginFormData {
@@ -29,7 +33,6 @@ const Login = () => {
     register,
     formState: { errors: formErrors, isDirty, isValid, isSubmitting },
     handleSubmit,
-    setError,
   } = useForm<LoginFormData>({
     resolver: yupResolver(loginFormDataSchema),
     mode: 'all',
@@ -37,19 +40,40 @@ const Login = () => {
 
   const [formCommonError, setFormCommonError] = useState<string>();
 
+  const dispatch = useDispatch();
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+
+  const redirectAfterLogin = () => {
+    const redirectTo = searchParams.get('from');
+    if (redirectTo) {
+      navigate(redirectTo, {
+        replace: true,
+      });
+    } else {
+      navigate(AUTHENTICATION_PATH.REDIRECT_AFTER_AUTH_PATH, {
+        replace: true,
+      });
+    }
+  };
+
   const handleFinish = handleSubmit((data) => {
     setFormCommonError(undefined);
 
     authService
       .loginWithEmailAndPassword(data.email, data.password)
       .then((response) => {
-        console.log(response.data.data);
+        dispatch(setUser(response.data.data.user));
+        authService.saveAuthTokens(response.data.data.accessToken, response.data.data.refreshToken);
+        redirectAfterLogin();
       })
       .catch((error: AxiosErrorType) => {
         const statusCode = error.response?.data.statusCode;
         if (statusCode === UNAUTHORIZED) {
           setFormCommonError('Tên đăng nhập hoặc mật khẩu không chính xác.');
+          return;
         }
+        setFormCommonError('Có lỗi xảy ra, vui lòng thử lại sau.');
       });
   });
 
