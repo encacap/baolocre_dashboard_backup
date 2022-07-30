@@ -10,8 +10,13 @@ import {
   Wrap,
 } from '@chakra-ui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { UNAUTHORIZED } from 'http-status';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import EncacapLogo from '../../../common/logo/EncacapLogo';
+import { authService } from '../../../app/services';
+import { AxiosErrorType } from '../../../app/types/common';
+import Alert from '../../../common/Alert';
+import EncacapLogo from '../../../common/EncacapLogo';
 import { loginFormDataSchema } from '../../../common/utils/validationSchemas/auth';
 
 interface LoginFormData {
@@ -24,24 +29,42 @@ const Login = () => {
     register,
     formState: { errors: formErrors, isDirty, isValid, isSubmitting },
     handleSubmit,
+    setError,
   } = useForm<LoginFormData>({
     resolver: yupResolver(loginFormDataSchema),
     mode: 'all',
   });
 
+  const [formCommonError, setFormCommonError] = useState<string>();
+
   const handleFinish = handleSubmit((data) => {
-    // eslint-disable-next-line no-console
-    console.log(data);
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(data);
-      }, 2000);
-    });
+    setFormCommonError(undefined);
+
+    authService
+      .loginWithEmailAndPassword(data.email, data.password)
+      .then((response) => {
+        console.log(response.data.data);
+      })
+      .catch((error: AxiosErrorType) => {
+        const statusCode = error.response?.data.statusCode;
+        if (statusCode === UNAUTHORIZED) {
+          setFormCommonError('Tên đăng nhập hoặc mật khẩu không chính xác.');
+        }
+      });
   });
 
   return (
-    <Center width="full" height="100vh">
-      <Box width={480} border="1px" borderColor="gray.200" paddingX="10" paddingY="16" rounded="12">
+    <Box width="full" height="100vh" display="flex" overflow="auto" py="4">
+      <Box
+        width={480}
+        border="1px"
+        borderColor="gray.200"
+        paddingX="10"
+        paddingTop="16"
+        paddingBottom="14"
+        rounded="12"
+        m="auto"
+      >
         <Box>
           <Center>
             <EncacapLogo boxSize="20" fill="teal.400" />
@@ -59,6 +82,9 @@ const Login = () => {
         </Box>
         <form onSubmit={handleFinish}>
           <Wrap marginTop="12" spacing="4" padding="2">
+            {formCommonError && (
+              <Alert status="error" message="Đăng nhập không thành công!" description={formCommonError} />
+            )}
             <FormControl isInvalid={!!formErrors?.email?.message}>
               <Input placeholder="Tài khoản" size="lg" {...register('email')} />
               <Collapse in={!!formErrors?.email?.message} endingHeight={26}>
@@ -85,7 +111,7 @@ const Login = () => {
           </Wrap>
         </form>
       </Box>
-    </Center>
+    </Box>
   );
 };
 

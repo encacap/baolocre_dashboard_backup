@@ -4,10 +4,12 @@
     "es2021": true
   },
   "extends": [
-    "plugin:react/recommended",
     "airbnb",
+    "plugin:react/recommended",
     "plugin:react/jsx-runtime",
-    "plugin:prettier/recommended"
+    "plugin:prettier/recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -18,7 +20,7 @@
     "sourceType": "module"
   },
   "plugins": ["react", "@typescript-eslint"],
-  "ignorePatterns": ["node_modules", "dist", "*.test.tsx", "src/reportWebVitals.ts"],
+  "ignorePatterns": ["node_modules", "dist", "*.test.tsx", "src/reportWebVitals.ts", "*.config.js"],
   "rules": {
     "react/jsx-filename-extension": [
       "error",
@@ -33,6 +35,7 @@
       }
     ],
     "react/jsx-props-no-spreading": ["off"],
+    "react/require-default-props": ["off"],
     "import/extensions": [
       "error",
       {
@@ -40,6 +43,8 @@
         "tsx": "never"
       }
     ],
-    "import/no-unresolved": ["off"]
+    "import/no-unresolved": ["off"],
+    "no-shadow": "off",
+    "@typescript-eslint/no-shadow": ["error"]
   }
 }
