@@ -1,5 +1,5 @@
 import { Box, Button, Center, Input, InputGroup, Text, Wrap } from '@chakra-ui/react';
-import EncacapLogo from '../../common/logo/EncacapLogo';
+import EncacapLogo from '../../../common/logo/EncacapLogo';
 
 const Login = () => {
   return (
