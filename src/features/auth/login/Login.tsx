@@ -60,7 +60,7 @@ const Login = () => {
   const handleFinish = handleSubmit((data) => {
     setFormCommonError(undefined);
 
-    authService
+    return authService
       .loginWithEmailAndPassword(data.email, data.password)
       .then((response) => {
         dispatch(setUser(response.data.data.user));
@@ -68,7 +68,7 @@ const Login = () => {
         redirectAfterLogin();
       })
       .catch((error: AxiosErrorType) => {
-        const statusCode = error.response?.data.statusCode;
+        const statusCode = error.response?.data?.statusCode;
         if (statusCode === UNAUTHORIZED) {
           setFormCommonError('Tên đăng nhập hoặc mật khẩu không chính xác.');
           return;
