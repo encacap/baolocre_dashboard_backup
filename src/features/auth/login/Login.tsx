@@ -91,7 +91,7 @@ const Login = () => {
       >
         <Box>
           <Center>
-            <EncacapLogo boxSize="20" fill="teal.400" />
+            <EncacapLogo boxSize="20" />
           </Center>
           <Center paddingTop="8">
             <Text fontSize="2xl" fontWeight="semibold">

@@ -2,7 +2,7 @@ import { Icon, IconProps } from '@chakra-ui/react';
 
 const EncacapLogo = (props: IconProps) => {
   return (
-    <Icon viewBox="0 0 293 301" {...props}>
+    <Icon viewBox="0 0 293 301" fill="teal.400" {...props}>
       <path
         fillRule="evenodd"
         className="shp0"
