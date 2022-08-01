@@ -37,9 +37,9 @@ const CommonRoutes = () => {
         const userData = response.data.data;
         dispatch(setUser(userData));
       })
-      .catch(() => {
+      .catch((error) => {
         const currentURL = window.encodeURIComponent(window.location.href);
-        window.location.href = `${AUTHENTICATION_PATH.LOGIN_PATH}?redirect=${currentURL}`;
+        window.location.href = `${AUTHENTICATION_PATH.LOGIN_PATH}?from=${currentURL}&error=${error.response.status}`;
       });
   }, [currentUser]);
 

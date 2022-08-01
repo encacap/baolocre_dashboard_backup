@@ -29,11 +29,16 @@ const getAuthTokens = () => ({
   refreshToken: localStorage.getItem('refreshToken') || '',
 });
 
-const refreshAccessToken = async (refreshToken: string) => ({
-  data: {
-    accessToken: '',
-    refreshToken,
-  },
-});
+const refreshAccessToken = async (refreshToken: string) =>
+  axiosInstance.post<AxiosResponseType<AuthResponseDataType>>(
+    AUTHENTICATION_API_PATH.REFRESH_TOKEN_PATH,
+    {
+      refreshToken,
+    },
+    {
+      autoRefreshToken: false,
+      redirectWhenError: false,
+    },
+  );
 
 export { loginWithEmailAndPassword, saveAuthTokens, getAuthTokens, refreshAccessToken };

@@ -21,12 +21,13 @@ const errorHandler = async (
         if (refreshToken) {
           try {
             const tokensResponse = await authService.refreshAccessToken(refreshToken);
-            const newTokens = tokensResponse.data.accessToken;
+            const newTokens = tokensResponse.data.data.accessToken;
             authService.saveAuthTokens(newTokens, refreshToken);
             config.headers = {
               ...config.headers,
               Authorization: `Bearer ${newTokens}`,
             };
+            config.autoRefreshToken = false;
             return instance?.(config);
           } catch (refreshError) {
             redirectURL = AUTHENTICATION_PATH.LOGIN_PATH;
