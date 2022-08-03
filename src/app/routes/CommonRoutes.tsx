@@ -1,9 +1,9 @@
 import _ from 'lodash';
 import { useCallback, useLayoutEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
+import PrepareOverlay from '../../common/components/loading/PrepareOverlay';
 import useDispatch from '../../common/hooks/useDispatch';
 import useSelector from '../../common/hooks/useSelector';
-import PrepareOverlay from '../../common/loading/PrepareOverlay';
 import AuthRoutes from '../../features/auth/routes/AuthRoutes';
 import { AUTHENTICATION_PATH } from '../constants/URL';
 import { userService } from '../services';
