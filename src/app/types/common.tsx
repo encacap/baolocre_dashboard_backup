@@ -23,3 +23,10 @@ export interface AxiosResponseType<T> extends AxiosResponse {
   message: string;
   data: T;
 }
+
+export interface SidebarMenuItemsType {
+  key: string;
+  icon: React.ReactElement;
+  label: string;
+  path: string;
+}

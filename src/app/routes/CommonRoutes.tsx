@@ -5,6 +5,7 @@ import PrepareOverlay from '../../common/components/loading/PrepareOverlay';
 import useDispatch from '../../common/hooks/useDispatch';
 import useSelector from '../../common/hooks/useSelector';
 import AuthRoutes from '../../features/auth/routes/AuthRoutes';
+import ConfigRoutes from '../../features/config/routes/ConfigRoutes';
 import { AUTHENTICATION_PATH } from '../constants/URL';
 import { userService } from '../services';
 import { setUser } from '../slices/userSlice';
@@ -50,6 +51,7 @@ const CommonRoutes = () => {
         <Routes>
           <Route path="/" element="Home" />
           <Route path="auth/*" element={<AuthRoutes />} />
+          <Route path="configs/*" element={<ConfigRoutes />} />
         </Routes>
       )}
     </>
