@@ -14,7 +14,7 @@ const Sidebar = ({ w }: SidebarProps) => {
       key: 'dashboard',
       icon: <Icon as={Element3} />,
       label: 'Tổng quan',
-      path: '/dashboard',
+      path: '/',
     },
     {
       key: 'configs',

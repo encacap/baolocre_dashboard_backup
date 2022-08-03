@@ -12,12 +12,12 @@ interface SidebarMenuItemProps {
 const SidebarMenuItem = ({ path, icon, label, isSelected = false }: SidebarMenuItemProps) => {
   return (
     <Link to={path} className="w-full">
-      <Flex alignItems="center" bgColor={isSelected ? 'teal.100' : 'white'} w="full" p="4" rounded="lg">
+      <Flex className={`item-center w-full p-4 rounded-lg ${isSelected && 'active'}`}>
         {cloneElement(icon, {
           color: isSelected ? 'teal.600' : 'black',
           boxSize: '6',
         })}
-        <Box ml="4" color={isSelected ? 'teal.600' : 'black'} fontWeight="semibold">
+        <Box className="ml-4 font-semibold" color={isSelected ? 'teal.600' : 'black'}>
           {label}
         </Box>
       </Flex>
