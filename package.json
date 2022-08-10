@@ -83,7 +83,10 @@
   },
   "lint-staged": {
     "src/**/*.{ts,tsx}": [
-      "yarn lint:fix"
+      "eslint --fix"
+    ],
+    "*.!(ts|tsx)": [
+      "prettier --write"
     ]
   }
 }
