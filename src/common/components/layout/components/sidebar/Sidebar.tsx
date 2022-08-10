@@ -19,7 +19,7 @@ const Sidebar = ({ w }: SidebarProps) => {
     {
       key: 'configs',
       icon: <Icon as={Setting3} />,
-      label: 'Thiết lập',
+      label: 'Cài đặt chung',
       path: '/configs',
     },
   ];

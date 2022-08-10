@@ -8,7 +8,7 @@ interface LayoutProps {
 
 const Layout = ({ children }: LayoutProps) => {
   return (
-    <Box w="100vw" h="100vh">
+    <Box h="100vh">
       <Sidebar w="72" />
       <Box w="calc(100% - 288px)" ml="288px" mr="0" p="4" bgColor="encacap.100">
         <Header h="16" />

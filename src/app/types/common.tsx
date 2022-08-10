@@ -30,3 +30,18 @@ export interface SidebarMenuItemsType {
   label: string;
   path: string;
 }
+
+export interface BreadcrumbType {
+  label: string;
+  path: string;
+  key: string;
+}
+
+export interface AlertProps extends React.HTMLAttributes<HTMLDivElement> {
+  status?: 'success' | 'info' | 'warning' | 'error';
+  message?: string;
+  description: string;
+  iconProps?: React.HTMLAttributes<HTMLDivElement>;
+  messageProps?: React.HTMLAttributes<HTMLDivElement>;
+  descriptionProps?: React.HTMLAttributes<HTMLDivElement>;
+}

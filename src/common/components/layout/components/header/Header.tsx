@@ -1,11 +1,11 @@
-import { Box, BoxProps } from '@chakra-ui/react';
+import { BoxProps, Flex } from '@chakra-ui/react';
 
 interface HeaderProps {
   h: BoxProps['h'];
 }
 
 const Header = ({ h }: HeaderProps) => {
-  return <Box h={h} bg="white" rounded="md" />;
+  return <Flex h={h} bg="white" rounded="md" alignItems="center" p="4" />;
 };
 
 export default Header;
