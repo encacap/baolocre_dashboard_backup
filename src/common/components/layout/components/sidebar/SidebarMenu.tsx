@@ -54,7 +54,7 @@ const SidebarMenu = ({ items }: SidebarMenuProps) => {
         ))}
       </Wrap>
       <Box
-        className="h-14 z-0 absolute rounded-md bg-teal-100 w-full top-0"
+        className="absolute top-0 z-0 h-14 w-full rounded-md bg-teal-100"
         ref={sidebarItemActivatedMaskRef}
       />
     </Box>

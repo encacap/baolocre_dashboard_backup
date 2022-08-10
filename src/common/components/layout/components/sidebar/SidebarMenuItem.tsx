@@ -12,7 +12,7 @@ interface SidebarMenuItemProps {
 const SidebarMenuItem = ({ path, icon, label, isSelected = false }: SidebarMenuItemProps) => {
   return (
     <Link to={path} className="w-full">
-      <Flex className={`item-center w-full p-4 rounded-lg ${isSelected && 'active'}`}>
+      <Flex className={`item-center w-full rounded-lg p-4 ${isSelected && 'active'}`}>
         {cloneElement(icon, {
           color: isSelected ? 'teal.600' : 'black',
           boxSize: '6',
