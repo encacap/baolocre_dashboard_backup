@@ -1,6 +1,6 @@
 import { Button } from '@chakra-ui/react';
 import { useEffect, useRef } from 'react';
-import Alert from '../../common/components/Alert/Alert';
+import Alert from '../../common/components/alert/Alert';
 import InputGroup from '../../common/components/InputGroup';
 
 const SEO = () => {

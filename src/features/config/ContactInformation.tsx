@@ -4,8 +4,11 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { configService } from '../../app/services';
 import { ContactInformationDataType } from '../../app/types/config';
 import InputGroup from '../../common/components/InputGroup';
+import useToast from '../../common/hooks/useToast';
 
 const ContactInformation = () => {
+  const toast = useToast();
+
   const {
     register,
     handleSubmit,
@@ -14,7 +17,9 @@ const ContactInformation = () => {
   } = useForm<ContactInformationDataType>();
 
   const handleFinish: SubmitHandler<ContactInformationDataType> = async (data) => {
-    return configService.updateContactInformation(data);
+    await configService.updateContactInformation(data);
+    toast.success('Thành công!', 'Đã cập nhật thông tin liên hệ.');
+    return data;
   };
 
   useEffect(() => {

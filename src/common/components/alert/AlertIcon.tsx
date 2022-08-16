@@ -1,4 +1,4 @@
-import { InfoCircle, Warning2 } from 'iconsax-react';
+import { InfoCircle, TickSquare, Warning2 } from 'iconsax-react';
 import { AlertProps } from '../../../app/types/common';
 
 interface AlertIconProps {
@@ -12,6 +12,8 @@ const AlertIcon = ({ status, ...props }: AlertIconProps) => {
       return <InfoCircle {...props} />;
     case 'error':
       return <Warning2 {...props} />;
+    case 'success':
+      return <TickSquare {...props} />;
     default:
       return null;
   }

@@ -18,7 +18,7 @@ import { AUTHENTICATION_PATH } from '../../../app/constants/URL';
 import { authService } from '../../../app/services';
 import { setUser } from '../../../app/slices/userSlice';
 import { AxiosErrorType } from '../../../app/types/common';
-import Alert from '../../../common/components/Alert/Alert';
+import Alert from '../../../common/components/alert/Alert';
 import EncacapLogo from '../../../common/components/EncacapLogo';
 import useDispatch from '../../../common/hooks/useDispatch';
 import { loginFormDataSchema } from '../../../common/utils/validationSchemas/auth';
