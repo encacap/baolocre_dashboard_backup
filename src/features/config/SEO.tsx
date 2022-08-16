@@ -28,7 +28,7 @@ const SEO = () => {
   }, [alertRef]);
 
   return (
-    <div className="pl-8">
+    <div className="border-t-2 border-gray-100 pt-4">
       <div className="text-lg font-semibold text-teal-600">SEO</div>
       <Alert
         ref={alertRef}
@@ -36,7 +36,7 @@ const SEO = () => {
         description="Cài đặt SEO cho toàn trang. Bạn có thể thay đổi cài đặt cho từng bài viết ở phần chi tiết bài viết."
         className="mt-4"
       />
-      <div className="mt-3 grid gap-y-3">
+      <div className="mt-5 grid gap-y-3 pb-2">
         <InputGroup label="Tiêu đề" placeholder="VD: Bất động sản nghỉ dưỡng Bảo Lộc" />
         <InputGroup
           type="textarea"

@@ -1,4 +1,4 @@
-import { UserDataType } from './data';
+import { UserDataType } from './user';
 
 export interface AuthResponseDataType {
   user: UserDataType;

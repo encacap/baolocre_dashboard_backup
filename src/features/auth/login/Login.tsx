@@ -46,8 +46,9 @@ const Login = () => {
 
   const redirectAfterLogin = () => {
     const redirectTo = searchParams.get('from');
+    const redirectUrl = new URL(redirectTo ?? '/');
     if (redirectTo) {
-      navigate(redirectTo, {
+      navigate(redirectUrl.pathname, {
         replace: true,
       });
     } else {
@@ -107,16 +108,21 @@ const Login = () => {
         <form onSubmit={handleFinish}>
           <Wrap marginTop="12" spacing="4" padding="2">
             {formCommonError && (
-              <Alert status="error" message="Đăng nhập không thành công!" description={formCommonError} />
+              <Alert
+                status="error"
+                message="Đăng nhập không thành công!"
+                description={formCommonError}
+                className="w-full"
+              />
             )}
             <FormControl isInvalid={!!formErrors?.email?.message}>
-              <Input placeholder="Tài khoản" size="lg" {...register('email')} />
+              <Input placeholder="Tài khoản" {...register('email')} />
               <Collapse in={!!formErrors?.email?.message} endingHeight={26}>
                 <FormErrorMessage>{formErrors?.email?.message}</FormErrorMessage>
               </Collapse>
             </FormControl>
             <FormControl isInvalid={!!formErrors?.password?.message} marginTop="4">
-              <Input type="password" placeholder="Mật khẩu" size="lg" {...register('password')} />
+              <Input type="password" placeholder="Mật khẩu" {...register('password')} />
               <Collapse in={!!formErrors?.password?.message} endingHeight={26}>
                 <FormErrorMessage>{formErrors?.password?.message}</FormErrorMessage>
               </Collapse>
@@ -126,7 +132,6 @@ const Login = () => {
               colorScheme="teal"
               marginTop="4"
               width="full"
-              size="lg"
               disabled={!isValid || !isDirty || isSubmitting}
               isLoading={isSubmitting}
             >
