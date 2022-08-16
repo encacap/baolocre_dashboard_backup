@@ -18,7 +18,9 @@ const ContactInformation = () => {
 
   const handleFinish: SubmitHandler<ContactInformationDataType> = async (data) => {
     await configService.updateContactInformation(data);
-    toast.success('Thành công!', 'Đã cập nhật thông tin liên hệ.');
+    toast.success('Thành công!', 'Đã cập nhật thông tin liên hệ.', {
+      id: 'updateContactInformationSuccess',
+    });
     return data;
   };
 
@@ -39,24 +41,48 @@ const ContactInformation = () => {
         <InputGroup
           label="Địa chỉ"
           placeholder="VD: 01 Nguyễn Văn A, P.B, Q.12, TP.HCM"
-          inputProps={{ ...register('address') }}
+          inputProps={{
+            ...register('address', {
+              disabled: isSubmitting,
+            }),
+          }}
         />
         <div className="grid grid-cols-2 gap-x-8 gap-y-3">
           <InputGroup
             label="Số điện thoại"
             placeholder="VD: 0901010101"
-            inputProps={{ ...register('phoneNumber') }}
+            inputProps={{
+              ...register('phoneNumber', {
+                disabled: isSubmitting,
+              }),
+            }}
           />
-          <InputGroup label="Zalo" placeholder="VD: 0901010101" inputProps={{ ...register('zalo') }} />
+          <InputGroup
+            label="Zalo"
+            placeholder="VD: 0901010101"
+            inputProps={{
+              ...register('zalo', {
+                disabled: isSubmitting,
+              }),
+            }}
+          />
           <InputGroup
             label="Facebook"
             placeholder="VD: https://www.facebook.com/khackhanh.encacap"
-            inputProps={{ ...register('facebook') }}
+            inputProps={{
+              ...register('facebook', {
+                disabled: isSubmitting,
+              }),
+            }}
           />
           <InputGroup
             label="Youtube"
             placeholder="VD: https://www.youtube.com/channel/UCRLAyC2EsX58scfCFKNrqZg"
-            inputProps={{ ...register('youtube') }}
+            inputProps={{
+              ...register('youtube', {
+                disabled: isSubmitting,
+              }),
+            }}
           />
         </div>
         <Button
