@@ -1,9 +1,8 @@
 import { object, string } from 'yup';
+import { emailSchema } from './common';
 
 const loginFormDataSchema = object({
-  email: string()
-    .required('Vui lòng nhập địa chỉ email của bạn.')
-    .email('Địa chỉ email của bạn không hợp lệ.'),
+  email: emailSchema(),
   password: string()
     .required('Vui lòng nhập mật khẩu của bạn.')
     .min(6, (rule) => `Mật khẩu phải có tối thiểu ${rule.min} ký tự.`)

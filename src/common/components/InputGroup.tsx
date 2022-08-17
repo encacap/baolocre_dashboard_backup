@@ -30,7 +30,7 @@ const InputGroup = (
       {type === 'textarea' && (
         <Textarea placeholder={placeholder} focusBorderColor="teal.500" {...textareaProps} />
       )}
-      <Collapse endingHeight={26}>
+      <Collapse in={!!errorMessage} endingHeight={26}>
         <FormErrorMessage>{errorMessage}</FormErrorMessage>
       </Collapse>
     </FormControl>
