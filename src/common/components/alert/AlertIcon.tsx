@@ -1,7 +1,7 @@
-import { InfoCircle, TickSquare, Warning2 } from 'iconsax-react';
+import { IconProps, InfoCircle, TickSquare, Warning2 } from 'iconsax-react';
 import { AlertProps } from '../../../app/types/common';
 
-interface AlertIconProps {
+interface AlertIconProps extends IconProps {
   status?: AlertProps['status'];
   className?: string;
 }

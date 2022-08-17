@@ -13,24 +13,26 @@ type ColorByStatusType = {
 };
 
 const ToastMessage = ({ message, description, status = 'info' }: ToastMessageProps) => {
-  const colorByStatus: ColorByStatusType = {
+  const containerColorByStatus: ColorByStatusType = {
     info: 'blue',
     error: 'red',
-    success: 'text-green-700',
+    success: 'bg-green-200',
+    warning: 'yellow',
+  };
+
+  const iconColorByStatus: ColorByStatusType = {
+    info: 'blue',
+    error: 'red',
+    success: 'text-green-500',
     warning: 'yellow',
   };
 
   return (
-    <div
-      className={twMerge(
-        colorByStatus[status],
-        'flex rounded-lg border-2 border-gray-100 bg-white p-4 shadow-lg shadow-gray-100',
-      )}
-    >
-      <AlertIcon status={status} />
-      <div className="ml-4">
-        <div className={twMerge(description && 'font-semibold')}>{message}</div>
-        {description && <div className="mt-1">{description}</div>}
+    <div className={twMerge(containerColorByStatus[status], 'flex rounded-lg  p-4')}>
+      <AlertIcon status={status} variant="Bold" className={iconColorByStatus[status]} />
+      <div className="ml-3">
+        <span className={twMerge(description && 'mr-1 font-semibold')}>{message}</span>
+        {description && <span className="mt-1">{description}</span>}
       </div>
     </div>
   );
