@@ -23,9 +23,11 @@
   "ignorePatterns": ["node_modules", "dist", "*.test.tsx", "src/reportWebVitals.ts", "*.config.js"],
   "rules": {
     "react/jsx-filename-extension": ["error", { "extensions": [".tsx"] }],
-    "react/function-component-definition": ["error", { "namedComponents": "arrow-function" }],
     "react/jsx-props-no-spreading": ["off"],
+    "react/function-component-definition": ["error", { "namedComponents": "arrow-function" }],
     "react/require-default-props": ["off"],
+    "jsx-a11y/control-has-associated-label": ["off"],
+    "jsx-a11y/click-events-have-key-events": ["off"],
     "import/extensions": ["error", { "ts": "never", "tsx": "never" }],
     "import/no-unresolved": ["off"],
     "no-shadow": "off",

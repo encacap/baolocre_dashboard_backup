@@ -25,7 +25,7 @@ const Sidebar = ({ w }: SidebarProps) => {
   ];
 
   return (
-    <Box w={w} pos="fixed" insetY="0" px="5" py="1" zIndex="popover" borderRight="1px" borderColor="gray.100">
+    <Box w={w} pos="fixed" insetY="0" px="5" py="1" zIndex="1300" borderRight="1px" borderColor="gray.100">
       <Flex alignItems="center" h="24">
         <EncacapLogo boxSize="12" mx="4" />
       </Flex>
