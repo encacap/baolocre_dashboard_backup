@@ -1,12 +1,12 @@
 import { AddCircle, Image } from 'iconsax-react';
 import { twMerge } from 'tailwind-merge';
 
-interface UploadImagePlaceholderProps {
+interface ImageUploadPlaceholderProps {
   isCollapsed: boolean;
   onChange: (fileList: File[] | null) => void;
 }
 
-const UploadImagePlaceholder = ({ isCollapsed, onChange }: UploadImagePlaceholderProps) => {
+const ImageUploadPlaceholder = ({ isCollapsed, onChange }: ImageUploadPlaceholderProps) => {
   const handleChangeFileList = (e: React.ChangeEvent<HTMLInputElement>) => {
     const fileList = e.target.files;
     if (!fileList) {
@@ -38,4 +38,4 @@ const UploadImagePlaceholder = ({ isCollapsed, onChange }: UploadImagePlaceholde
   );
 };
 
-export default UploadImagePlaceholder;
+export default ImageUploadPlaceholder;

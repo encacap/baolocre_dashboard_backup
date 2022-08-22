@@ -2,12 +2,12 @@ import { Add } from 'iconsax-react';
 import { FileType } from '../../../app/types/common';
 import { getImageURLFromFile } from '../../utils/upload';
 
-interface UploadImagePreviewProps {
+interface ImageUploadPreviewProps {
   file: FileType;
   onRemove: (file: FileType) => void;
 }
 
-const UploadImagePreview = ({ file, onRemove }: UploadImagePreviewProps) => {
+const ImageUploadPreview = ({ file, onRemove }: ImageUploadPreviewProps) => {
   return (
     <div className="relative aspect-video h-20 w-full rounded-lg border-2 border-gray-100 p-2 duration-100 hover:border-gray-200">
       <img src={getImageURLFromFile(file)} className="h-full w-full object-contain object-center" alt="" />
@@ -23,4 +23,4 @@ const UploadImagePreview = ({ file, onRemove }: UploadImagePreviewProps) => {
   );
 };
 
-export default UploadImagePreview;
+export default ImageUploadPreview;

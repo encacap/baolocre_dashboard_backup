@@ -7,18 +7,18 @@ import { twMerge } from 'tailwind-merge';
 import { FileType } from '../../../app/types/common';
 import { uploadImageFormSchema } from '../../utils/validationSchemas/upload';
 import InputGroup from '../InputGroup';
-import UploadImagePlaceholder from './UploadImagePlaceholder';
-import UploadImagePreview from './UploadImagePreview';
+import ImageUploadPlaceholder from './ImageUploadPlaceholder';
+import ImageUploadPreview from './ImageUploadPreview';
 
-type UploadImageModalProps = Omit<ModalProps, 'children' | 'className'> & {
+type ImageUploadModalProps = Omit<ModalProps, 'children' | 'className'> & {
   onClose: () => void;
 };
 
-type UploadImageModalFormDataType = {
+type ImageUploadModalFormDataType = {
   imageUrl: string;
 };
 
-const UploadImageModal = ({ onClose, ...props }: UploadImageModalProps) => {
+const ImageUploadModal = ({ onClose, ...props }: ImageUploadModalProps) => {
   const [currentFileList, setCurrentFileList] = useState<FileType[]>([]);
 
   const {
@@ -27,7 +27,7 @@ const UploadImageModal = ({ onClose, ...props }: UploadImageModalProps) => {
     setValue,
     clearErrors,
     watch,
-  } = useForm<UploadImageModalFormDataType>({
+  } = useForm<ImageUploadModalFormDataType>({
     resolver: yupResolver(uploadImageFormSchema),
     mode: 'onChange',
   });
@@ -101,14 +101,14 @@ const UploadImageModal = ({ onClose, ...props }: UploadImageModalProps) => {
         <div className={twMerge('mt-6', !!currentFileList?.length && 'grid grid-cols-4 gap-4')}>
           {currentFileList &&
             Array.from(currentFileList).map((file, index) => (
-              <UploadImagePreview
+              <ImageUploadPreview
                 // eslint-disable-next-line react/no-array-index-key
                 key={index}
                 file={file}
                 onRemove={handleRemoveFileInput}
               />
             ))}
-          <UploadImagePlaceholder isCollapsed={!!currentFileList?.length} onChange={handleChangeFileInput} />
+          <ImageUploadPlaceholder isCollapsed={!!currentFileList?.length} onChange={handleChangeFileInput} />
         </div>
         <InputGroup
           label="Hoặc nhập đường dẫn hình ảnh"
@@ -125,4 +125,4 @@ const UploadImageModal = ({ onClose, ...props }: UploadImageModalProps) => {
   );
 };
 
-export default UploadImageModal;
+export default ImageUploadModal;
