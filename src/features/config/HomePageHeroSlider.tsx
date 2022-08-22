@@ -1,5 +1,5 @@
 import { useDisclosure } from '@chakra-ui/react';
-import UploadImageModal from '../../common/components/uploadImageModal/UploadImageModal';
+import UploadImageModal from '../../common/components/upload/UploadImageModal';
 
 const HomePageHeroSlider = () => {
   const {

@@ -45,3 +45,8 @@ export interface AlertProps extends React.HTMLAttributes<HTMLDivElement> {
   messageProps?: React.HTMLAttributes<HTMLDivElement>;
   descriptionProps?: React.HTMLAttributes<HTMLDivElement>;
 }
+
+export interface FileType extends Partial<File> {
+  id?: string;
+  response?: string;
+}
