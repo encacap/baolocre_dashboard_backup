@@ -15,14 +15,14 @@ type ColorByStatusType = {
 const ToastMessage = ({ message, description, status = 'info' }: ToastMessageProps) => {
   const containerColorByStatus: ColorByStatusType = {
     info: 'blue',
-    error: 'red',
+    error: 'bg-red-200',
     success: 'bg-green-200',
     warning: 'yellow',
   };
 
   const iconColorByStatus: ColorByStatusType = {
     info: 'blue',
-    error: 'red',
+    error: 'text-red-500',
     success: 'text-green-500',
     warning: 'yellow',
   };

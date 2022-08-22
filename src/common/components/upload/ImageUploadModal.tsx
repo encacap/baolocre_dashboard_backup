@@ -4,7 +4,10 @@ import _ from 'lodash';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { twMerge } from 'tailwind-merge';
-import { FileType } from '../../../app/types/common';
+import { uploadService } from '../../../app/services';
+import { AxiosErrorType, FileType } from '../../../app/types/common';
+import { ImageType } from '../../../app/types/upload';
+import useToast from '../../hooks/useToast';
 import { uploadImageFormSchema } from '../../utils/validationSchemas/upload';
 import InputGroup from '../InputGroup';
 import ImageUploadPlaceholder from './ImageUploadPlaceholder';
@@ -12,14 +15,16 @@ import ImageUploadPreview from './ImageUploadPreview';
 
 type ImageUploadModalProps = Omit<ModalProps, 'children' | 'className'> & {
   onClose: () => void;
+  onSubmit: (images: ImageType[]) => void;
 };
 
 type ImageUploadModalFormDataType = {
   imageUrl: string;
 };
 
-const ImageUploadModal = ({ onClose, ...props }: ImageUploadModalProps) => {
+const ImageUploadModal = ({ onClose, onSubmit, ...props }: ImageUploadModalProps) => {
   const [currentFileList, setCurrentFileList] = useState<FileType[]>([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const {
     register,
@@ -33,6 +38,14 @@ const ImageUploadModal = ({ onClose, ...props }: ImageUploadModalProps) => {
   });
 
   const currentImageUrl = watch('imageUrl');
+
+  const toast = useToast();
+
+  const clearModal = () => {
+    setCurrentFileList([]);
+    clearErrors();
+    setValue('imageUrl', '');
+  };
 
   const handleChangeFileInput = (fileList: FileType[] | null) => {
     if (!fileList) {
@@ -64,10 +77,30 @@ const ImageUploadModal = ({ onClose, ...props }: ImageUploadModalProps) => {
   };
 
   const handleCloseModal = () => {
-    setCurrentFileList([]);
-    clearErrors();
-    setValue('imageUrl', '');
+    clearModal();
     onClose();
+  };
+
+  const handleSubmit = () => {
+    setIsSubmitting(true);
+    uploadService
+      .uploadImages(currentFileList, 'other')
+      .then((images) => {
+        onSubmit(images);
+        handleCloseModal();
+      })
+      .catch((error: AxiosErrorType) => {
+        toast.error(
+          'Tải lên hình ảnh không thành công!',
+          error.response?.data.errors.map((e) => e.message.join(', ')).join(', ') || 'Vui lòng thử lại sau.',
+          {
+            id: 'uploadImageError',
+          },
+        );
+      })
+      .finally(() => {
+        setIsSubmitting(false);
+      });
   };
 
   useEffect(() => {
@@ -108,7 +141,11 @@ const ImageUploadModal = ({ onClose, ...props }: ImageUploadModalProps) => {
                 onRemove={handleRemoveFileInput}
               />
             ))}
-          <ImageUploadPlaceholder isCollapsed={!!currentFileList?.length} onChange={handleChangeFileInput} />
+          <ImageUploadPlaceholder
+            isCollapsed={!!currentFileList?.length}
+            disabled={isSubmitting}
+            onChange={handleChangeFileInput}
+          />
         </div>
         <InputGroup
           label="Hoặc nhập đường dẫn hình ảnh"
@@ -116,8 +153,15 @@ const ImageUploadModal = ({ onClose, ...props }: ImageUploadModalProps) => {
           placeholder="VD: https://example.com/image.png"
           errorMessage={errors?.imageUrl?.message}
           inputProps={register('imageUrl')}
+          disabled={isSubmitting}
         />
-        <Button colorScheme="teal" className="mt-7" disabled={!currentFileList.length}>
+        <Button
+          isLoading={isSubmitting}
+          colorScheme="teal"
+          className="mt-7"
+          disabled={!currentFileList.length || isSubmitting}
+          onClick={handleSubmit}
+        >
           Xác nhận
         </Button>
       </ModalContent>

@@ -1,4 +1,5 @@
 import { useDisclosure } from '@chakra-ui/react';
+import { ImageType } from '../../app/types/upload';
 import ImageUploadModal from '../../common/components/upload/ImageUploadModal';
 
 const HomePageHeroSlider = () => {
@@ -7,6 +8,10 @@ const HomePageHeroSlider = () => {
     onOpen: onOpenUploadImageModal,
     onClose: onCloseUploadImageModal,
   } = useDisclosure();
+
+  const handleConfirmUpdate = (images: ImageType[]) => {
+    console.log(images);
+  };
 
   return (
     <>
@@ -21,7 +26,11 @@ const HomePageHeroSlider = () => {
           />
         </div>
       </div>
-      <ImageUploadModal isOpen={isOpenUploadImageModal} onClose={onCloseUploadImageModal} />
+      <ImageUploadModal
+        isOpen={isOpenUploadImageModal}
+        onClose={onCloseUploadImageModal}
+        onSubmit={handleConfirmUpdate}
+      />
     </>
   );
 };

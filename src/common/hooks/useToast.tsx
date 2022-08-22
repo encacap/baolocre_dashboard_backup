@@ -35,7 +35,7 @@ const useToast = () => {
       return chakraToast.update(id, showToastOptions);
     }
 
-    return id || undefined;
+    return chakraToast(showToastOptions);
   };
 
   return {
@@ -46,6 +46,13 @@ const useToast = () => {
         message,
         description,
         status: 'success',
+      }),
+    error: (message: string, description?: string, options?: ToastOptions) =>
+      showToast({
+        ...options,
+        message,
+        description,
+        status: 'error',
       }),
   };
 };

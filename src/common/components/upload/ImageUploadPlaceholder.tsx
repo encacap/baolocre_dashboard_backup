@@ -3,10 +3,11 @@ import { twMerge } from 'tailwind-merge';
 
 interface ImageUploadPlaceholderProps {
   isCollapsed: boolean;
+  disabled?: boolean;
   onChange: (fileList: File[] | null) => void;
 }
 
-const ImageUploadPlaceholder = ({ isCollapsed, onChange }: ImageUploadPlaceholderProps) => {
+const ImageUploadPlaceholder = ({ isCollapsed, disabled, onChange }: ImageUploadPlaceholderProps) => {
   const handleChangeFileList = (e: React.ChangeEvent<HTMLInputElement>) => {
     const fileList = e.target.files;
     if (!fileList) {
@@ -32,6 +33,7 @@ const ImageUploadPlaceholder = ({ isCollapsed, onChange }: ImageUploadPlaceholde
       <input
         type="file"
         className="absolute inset-0 cursor-pointer opacity-0"
+        disabled={disabled}
         onChange={handleChangeFileList}
       />
     </div>

@@ -13,7 +13,7 @@ export interface AxiosErrorMessageType {
 export interface AxiosErrorDataType {
   statusCode: number;
   message: string;
-  error: AxiosErrorMessageType[];
+  errors: AxiosErrorMessageType[];
 }
 
 export type AxiosErrorType = AxiosError<AxiosErrorDataType>;
