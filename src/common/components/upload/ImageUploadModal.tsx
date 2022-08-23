@@ -1,14 +1,14 @@
 import { Button, Modal, ModalCloseButton, ModalContent, ModalOverlay, ModalProps } from '@chakra-ui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import _ from 'lodash';
-import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useState } from 'react';
+import { useFieldArray, useForm } from 'react-hook-form';
 import { twMerge } from 'tailwind-merge';
 import { uploadService } from '../../../app/services';
 import { AxiosErrorType, FileType } from '../../../app/types/common';
 import { ImageType } from '../../../app/types/upload';
 import useToast from '../../hooks/useToast';
-import { uploadImageFormSchema } from '../../utils/validationSchemas/upload';
+import { imageUploadFormSchema } from '../../utils/validationSchemas/upload';
 import InputGroup from '../InputGroup';
 import ImageUploadPlaceholder from './ImageUploadPlaceholder';
 import ImageUploadPreview from './ImageUploadPreview';
@@ -18,33 +18,49 @@ type ImageUploadModalProps = Omit<ModalProps, 'children' | 'className'> & {
   onSubmit: (images: ImageType[]) => void;
 };
 
+type ImageURLItemType = {
+  url: string;
+};
+
 type ImageUploadModalFormDataType = {
-  imageUrl: string;
+  imageUrls: ImageURLItemType[];
 };
 
 const ImageUploadModal = ({ onClose, onSubmit, ...props }: ImageUploadModalProps) => {
   const [currentFileList, setCurrentFileList] = useState<FileType[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const defaultFormValues = {
+    imageUrls: [
+      {
+        url: '',
+      },
+    ],
+  };
+
   const {
     register,
+    control,
     formState: { errors },
     setValue,
     clearErrors,
-    watch,
   } = useForm<ImageUploadModalFormDataType>({
-    resolver: yupResolver(uploadImageFormSchema),
+    resolver: yupResolver(imageUploadFormSchema),
     mode: 'onChange',
+    defaultValues: defaultFormValues,
   });
 
-  const currentImageUrl = watch('imageUrl');
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: 'imageUrls',
+  });
 
   const toast = useToast();
 
   const clearModal = () => {
     setCurrentFileList([]);
     clearErrors();
-    setValue('imageUrl', '');
+    setValue('imageUrls', defaultFormValues.imageUrls);
   };
 
   const handleChangeFileInput = (fileList: FileType[] | null) => {
@@ -56,7 +72,7 @@ const ImageUploadModal = ({ onClose, onSubmit, ...props }: ImageUploadModalProps
       const newFileList = Array.from(fileList);
 
       if (prevFileList) {
-        return [...prevFileList.filter((image) => !image.response), ...newFileList];
+        return [...prevFileList, ...newFileList];
       }
 
       return Array.from(newFileList);
@@ -66,13 +82,8 @@ const ImageUploadModal = ({ onClose, onSubmit, ...props }: ImageUploadModalProps
   const handleRemoveFileInput = (file: FileType) => {
     const newFileList = currentFileList.filter((prevFile) => !_.isEqual(prevFile, file));
     if (file.response) {
-      setValue('imageUrl', '');
+      remove(Number(file.id));
     }
-    setCurrentFileList(newFileList);
-  };
-
-  const handleRemoveImageUrl = () => {
-    const newFileList = currentFileList.filter((prevFile) => !prevFile.response);
     setCurrentFileList(newFileList);
   };
 
@@ -92,7 +103,9 @@ const ImageUploadModal = ({ onClose, onSubmit, ...props }: ImageUploadModalProps
       .catch((error: AxiosErrorType) => {
         toast.error(
           'Tải lên hình ảnh không thành công!',
-          error.response?.data.errors.map((e) => e.message.join(', ')).join(', ') || 'Vui lòng thử lại sau.',
+          error.response?.data.errors?.map((e) => e.message.join(', ')).join(', ') ||
+            error.response?.data.message ||
+            'Vui lòng thử lại sau.',
           {
             id: 'uploadImageError',
           },
@@ -103,25 +116,29 @@ const ImageUploadModal = ({ onClose, onSubmit, ...props }: ImageUploadModalProps
       });
   };
 
-  useEffect(() => {
-    if (!currentImageUrl) {
-      handleRemoveImageUrl();
+  const handleChangeImageUrl = (url: string, index: number) => {
+    if (!url) {
       return;
     }
-
-    const isValid = uploadImageFormSchema.isValidSync({ imageUrl: currentImageUrl });
-
-    if (!isValid) {
-      return;
-    }
-
-    handleChangeFileInput([
-      {
-        id: currentImageUrl,
-        response: currentImageUrl,
-      },
-    ]);
-  }, [currentImageUrl]);
+    imageUploadFormSchema
+      .validate({
+        imageUrls: [{ url }],
+      })
+      .then(() => {
+        handleChangeFileInput([
+          {
+            id: String(index),
+            response: url,
+          },
+        ]);
+        append({
+          url: '',
+        });
+      })
+      .catch(() => {
+        // TODO: Do something...
+      });
+  };
 
   return (
     <Modal blockScrollOnMount isCentered closeOnOverlayClick onClose={handleCloseModal} {...props}>
@@ -147,14 +164,20 @@ const ImageUploadModal = ({ onClose, onSubmit, ...props }: ImageUploadModalProps
             onChange={handleChangeFileInput}
           />
         </div>
-        <InputGroup
-          label="Hoặc nhập đường dẫn hình ảnh"
-          className="mt-5"
-          placeholder="VD: https://example.com/image.png"
-          errorMessage={errors?.imageUrl?.message}
-          inputProps={register('imageUrl')}
-          disabled={isSubmitting}
-        />
+        {fields.map((field, index) => (
+          <InputGroup
+            // eslint-disable-next-line react/no-array-index-key
+            key={index}
+            label={index === 0 ? 'Hoặc nhập đường dẫn hình ảnh' : undefined}
+            className={index === 0 ? 'mt-5' : 'mt-3'}
+            placeholder="VD: https://example.com/image.png"
+            errorMessage={errors?.imageUrls?.[index]?.url?.message}
+            inputProps={register(`imageUrls.${index}.url`, {
+              onChange: (e) => handleChangeImageUrl(e.target.value, index),
+            })}
+            disabled={isSubmitting || !!field.url}
+          />
+        ))}
         <Button
           isLoading={isSubmitting}
           colorScheme="teal"

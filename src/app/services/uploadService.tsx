@@ -19,7 +19,11 @@ const uploadImages = async (
   const formData = new FormData();
 
   images.forEach((image) => {
-    formData.append('files', image as File);
+    if (image.response) {
+      formData.append('urls[]', image.response);
+    } else {
+      formData.append('files[]', image as File);
+    }
   });
 
   formData.append('folder', folder);

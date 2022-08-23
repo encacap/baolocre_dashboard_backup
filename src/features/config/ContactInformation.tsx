@@ -24,7 +24,7 @@ const ContactInformation = () => {
 
   const handleFinish: SubmitHandler<ContactInformationDataType> = async (data) => {
     await configService.updateContactInformation(data);
-    toast.success('Thành công!', 'Đã cập nhật thông tin liên hệ.', {
+    toast.success('Thành công!', 'Đã cập nhật thông tin liên hệ', {
       id: 'updateContactInformationSuccess',
     });
     return data;

@@ -1,8 +1,12 @@
-import { object, string } from 'yup';
+import { array, object, string } from 'yup';
 
-const uploadImageFormSchema = object({
-  imageUrl: string().url('Đường dẫn hình ảnh không hợp lệ!'),
+const imageUploadFormSchema = object({
+  imageUrls: array().of(
+    object().shape({
+      url: string().url('Đường dẫn hình ảnh không hợp lệ!'),
+    }),
+  ),
 });
 
 // eslint-disable-next-line import/prefer-default-export
-export { uploadImageFormSchema };
+export { imageUploadFormSchema };
