@@ -2,7 +2,7 @@ import { Button, Modal, ModalCloseButton, ModalContent, ModalOverlay, ModalProps
 import { yupResolver } from '@hookform/resolvers/yup';
 import _ from 'lodash';
 import { useState } from 'react';
-import { useFieldArray, useForm } from 'react-hook-form';
+import { FieldArrayWithId, useFieldArray, useForm } from 'react-hook-form';
 import { twMerge } from 'tailwind-merge';
 import { uploadService } from '../../../app/services';
 import { AxiosErrorType, FileType } from '../../../app/types/common';
@@ -61,6 +61,7 @@ const ImageUploadModal = ({ onClose, onSubmit, ...props }: ImageUploadModalProps
     setCurrentFileList([]);
     clearErrors();
     setValue('imageUrls', defaultFormValues.imageUrls);
+    setIsSubmitting(false);
   };
 
   const handleChangeFileInput = (fileList: FileType[] | null) => {
@@ -82,7 +83,8 @@ const ImageUploadModal = ({ onClose, onSubmit, ...props }: ImageUploadModalProps
   const handleRemoveFileInput = (file: FileType) => {
     const newFileList = currentFileList.filter((prevFile) => !_.isEqual(prevFile, file));
     if (file.response) {
-      remove(Number(file.id));
+      const removedIndex = fields.findIndex((field) => field.url === file.response);
+      remove(removedIndex);
     }
     setCurrentFileList(newFileList);
   };
@@ -116,7 +118,7 @@ const ImageUploadModal = ({ onClose, onSubmit, ...props }: ImageUploadModalProps
       });
   };
 
-  const handleChangeImageUrl = (url: string, index: number) => {
+  const handleChangeImageUrl = (url: string, field: FieldArrayWithId<ImageUploadModalFormDataType>) => {
     if (!url) {
       return;
     }
@@ -127,7 +129,7 @@ const ImageUploadModal = ({ onClose, onSubmit, ...props }: ImageUploadModalProps
       .then(() => {
         handleChangeFileInput([
           {
-            id: String(index),
+            id: String(field.id),
             response: url,
           },
         ]);
@@ -156,6 +158,7 @@ const ImageUploadModal = ({ onClose, onSubmit, ...props }: ImageUploadModalProps
                 key={index}
                 file={file}
                 onRemove={handleRemoveFileInput}
+                disabled={isSubmitting}
               />
             ))}
           <ImageUploadPlaceholder
@@ -166,15 +169,18 @@ const ImageUploadModal = ({ onClose, onSubmit, ...props }: ImageUploadModalProps
         </div>
         {fields.map((field, index) => (
           <InputGroup
-            // eslint-disable-next-line react/no-array-index-key
-            key={index}
+            key={field.id}
             label={index === 0 ? 'Hoặc nhập đường dẫn hình ảnh' : undefined}
             className={index === 0 ? 'mt-5' : 'mt-3'}
             placeholder="VD: https://example.com/image.png"
             errorMessage={errors?.imageUrls?.[index]?.url?.message}
-            inputProps={register(`imageUrls.${index}.url`, {
-              onChange: (e) => handleChangeImageUrl(e.target.value, index),
-            })}
+            inputProps={{
+              autoComplete: 'off',
+              ...register(`imageUrls.${index}.url`, {
+                onChange: (e) => handleChangeImageUrl(e.target.value, field),
+              }),
+              autoFocus: !field.url,
+            }}
             disabled={isSubmitting || !!field.url}
           />
         ))}

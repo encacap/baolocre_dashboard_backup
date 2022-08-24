@@ -21,8 +21,9 @@ const ImageUploadPlaceholder = ({ isCollapsed, disabled, onChange }: ImageUpload
     <div className={twMerge('group relative h-full w-full duration-100', isCollapsed && 'h-20')}>
       <div
         className={twMerge(
-          'flex flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-100 bg-gray-50 p-10 text-gray-400 duration-100 group-hover:border-gray-200 group-hover:bg-gray-100',
+          'flex flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-100 bg-gray-50 p-10 text-gray-400 duration-100',
           isCollapsed && 'h-full w-full border-gray-100 p-2',
+          !disabled && 'group-hover:border-gray-200 group-hover:bg-gray-100',
         )}
       >
         {isCollapsed ? <AddCircle size={32} /> : <Image size={32} />}
@@ -32,7 +33,7 @@ const ImageUploadPlaceholder = ({ isCollapsed, disabled, onChange }: ImageUpload
       </div>
       <input
         type="file"
-        className="absolute inset-0 cursor-pointer opacity-0"
+        className="absolute inset-0 cursor-pointer opacity-0 disabled:cursor-default"
         disabled={disabled}
         onChange={handleChangeFileList}
       />
