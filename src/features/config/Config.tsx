@@ -2,7 +2,7 @@ import ContentWrapper from '../../common/components/layout/components/content/Co
 import ContentWrapperBody from '../../common/components/layout/components/content/ContentWrapperBody';
 import ContentWrapperHeader from '../../common/components/layout/components/content/ContentWrapperHeader';
 import ContactInformation from './ContactInformation';
-import HomePageHeroSlider from './HomePageHeroSlider';
+import HomepageHeroImage from './homepageHeroImage/HomepageHeroImage';
 import SEO from './SEO';
 
 const Config = () => {
@@ -15,7 +15,7 @@ const Config = () => {
         <div className="grid gap-y-6">
           <ContactInformation />
           <SEO />
-          <HomePageHeroSlider />
+          <HomepageHeroImage />
         </div>
       </ContentWrapperBody>
     </ContentWrapper>
