@@ -1,7 +1,7 @@
 import axiosInstance from '../../common/utils/http/axiosInstance';
 import { IMAGE_API_PATH } from '../constants/API';
 import { FileType } from '../types/common';
-import { ImageType, UploadImageParamType } from '../types/upload';
+import { ImageDataType, UploadImageParamType } from '../types/upload';
 
 const getImageFileFromUrl = async (url: string) => {
   const response = await axiosInstance.get(url, {
@@ -15,7 +15,7 @@ const getImageFileFromUrl = async (url: string) => {
 const uploadImages = async (
   images: FileType[],
   folder: UploadImageParamType['folder'],
-): Promise<ImageType[]> => {
+): Promise<ImageDataType[]> => {
   const formData = new FormData();
 
   images.forEach((image) => {

@@ -6,8 +6,9 @@ import { FieldArrayWithId, useFieldArray, useForm } from 'react-hook-form';
 import { twMerge } from 'tailwind-merge';
 import { uploadService } from '../../../app/services';
 import { AxiosErrorType, FileType } from '../../../app/types/common';
-import { ImageType } from '../../../app/types/upload';
+import { ImageDataType } from '../../../app/types/upload';
 import useToast from '../../hooks/useToast';
+import { getErrorMessageFromResponse } from '../../utils/error';
 import { imageUploadFormSchema } from '../../utils/validationSchemas/upload';
 import InputGroup from '../InputGroup';
 import ImageUploadPlaceholder from './ImageUploadPlaceholder';
@@ -15,7 +16,7 @@ import ImageUploadPreview from './ImageUploadPreview';
 
 type ImageUploadModalProps = Omit<ModalProps, 'children' | 'className'> & {
   onClose: () => void;
-  onSubmit: (images: ImageType[]) => void;
+  onSubmit: (images: ImageDataType[]) => void;
 };
 
 type ImageURLItemType = {
@@ -103,15 +104,9 @@ const ImageUploadModal = ({ onClose, onSubmit, ...props }: ImageUploadModalProps
         handleCloseModal();
       })
       .catch((error: AxiosErrorType) => {
-        toast.error(
-          'Tải lên hình ảnh không thành công!',
-          error.response?.data.errors?.map((e) => e.message.join(', ')).join(', ') ||
-            error.response?.data.message ||
-            'Vui lòng thử lại sau.',
-          {
-            id: 'uploadImageError',
-          },
-        );
+        toast.error('Tải lên hình ảnh không thành công!', getErrorMessageFromResponse(error), {
+          id: 'uploadImageError',
+        });
       })
       .finally(() => {
         setIsSubmitting(false);
