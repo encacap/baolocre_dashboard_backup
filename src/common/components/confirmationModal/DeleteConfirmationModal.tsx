@@ -64,7 +64,7 @@ const DeleteConfirmationModal = ({
                 </h3>
                 <div className="mt-2 mb-1">
                   {preview && <div className="mt-2">{preview}</div>}
-                  <p className="whitespace-pre-line text-sm text-gray-500">{description}</p>
+                  <div className="whitespace-pre-line text-sm text-gray-500">{description}</div>
                 </div>
               </div>
             </div>
