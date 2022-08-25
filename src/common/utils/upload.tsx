@@ -1,4 +1,5 @@
 import { FileType } from '../../app/types/common';
+import { ImageDataType, ImageVariantDataType } from '../../app/types/upload';
 
 const getImageURLFromFile = (file: FileType) => {
   if (!file) {
@@ -10,5 +11,22 @@ const getImageURLFromFile = (file: FileType) => {
   return URL.createObjectURL(file as File);
 };
 
-// eslint-disable-next-line import/prefer-default-export
-export { getImageURLFromFile };
+const getVariantObjectFromImage = (image: ImageDataType) => {
+  const { variants } = image;
+  const results: ImageVariantDataType = {};
+  variants.forEach((variant) => {
+    const variantName = variant.split('/').pop();
+    if (!variantName) {
+      return;
+    }
+    results[variantName] = variant;
+  });
+  return results;
+};
+
+const getImageURLFromImage = (image: ImageDataType, variantName: string) => {
+  const variantObject = getVariantObjectFromImage(image);
+  return variantObject[variantName] || variantObject.public || Object.values(variantObject)[0];
+};
+
+export { getImageURLFromFile, getImageURLFromImage };

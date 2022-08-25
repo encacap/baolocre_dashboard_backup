@@ -1,3 +1,7 @@
+export interface ImageVariantDataType {
+  [key: string]: string;
+}
+
 export interface ImageDataType {
   id: string;
   requireSignedURLs: boolean;
