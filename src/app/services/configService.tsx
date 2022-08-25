@@ -24,4 +24,15 @@ const addHomepageHeroImages = async (imageIds: string[]): Promise<ImageDataType[
   return response.data.data;
 };
 
-export { getContactInformation, updateContactInformation, getHomepageHeroImages, addHomepageHeroImages };
+const deleteHomepageHeroImageById = async (imageId: string): Promise<ImageDataType[]> => {
+  const response = await axiosInstance.delete(`configs/homepage-hero-images/${imageId}`);
+  return response.data.data;
+};
+
+export {
+  getContactInformation,
+  updateContactInformation,
+  getHomepageHeroImages,
+  addHomepageHeroImages,
+  deleteHomepageHeroImageById,
+};

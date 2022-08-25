@@ -3,6 +3,7 @@ import { AddSquare } from 'iconsax-react';
 import { useEffect, useState } from 'react';
 import { configService } from '../../../app/services';
 import { ImageDataType } from '../../../app/types/upload';
+import DeleteConfirmationModal from '../../../common/components/confirmationModal/DeleteConfirmationModal';
 import ImageUploadModal from '../../../common/components/upload/ImageUploadModal';
 import useToast from '../../../common/hooks/useToast';
 import { getErrorMessageFromResponse } from '../../../common/utils/error';
@@ -19,6 +20,8 @@ const HomepageHeroImage = () => {
 
   const [imageList, setImageList] = useState<ImageDataType[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isShowDeleteConfirmationModal, setIsShowDeleteConfirmationModal] = useState(false);
+  const [selectedToDeleteImage, setSelectedToDeleteImage] = useState<ImageDataType>();
 
   const handleConfirmUpdate = (images: ImageDataType[]) => {
     setIsSubmitting(true);
@@ -35,6 +38,27 @@ const HomepageHeroImage = () => {
       });
   };
 
+  const handleClickDelete = (image: ImageDataType) => {
+    setSelectedToDeleteImage(image);
+    setIsShowDeleteConfirmationModal(true);
+  };
+
+  const handleCloseDeleteConfirmationModal = () => setIsShowDeleteConfirmationModal(false);
+
+  const handleConfirmDelete = () => {
+    if (!selectedToDeleteImage) return;
+    configService
+      .deleteHomepageHeroImageById(selectedToDeleteImage.id)
+      .then((data) => {
+        setImageList(data);
+        toast.success('Xóa hình ảnh thành công!');
+      })
+      .finally(() => {
+        setIsShowDeleteConfirmationModal(false);
+        setSelectedToDeleteImage(undefined);
+      });
+  };
+
   useEffect(() => {
     configService.getHomepageHeroImages().then(setImageList);
   }, []);
@@ -46,7 +70,7 @@ const HomepageHeroImage = () => {
         <div className="relative">
           <div className="mt-4 grid grid-cols-4 gap-4">
             {imageList.map((image) => (
-              <HomepageHeroImageItem key={image.id} image={image} />
+              <HomepageHeroImageItem key={image.id} image={image} onDelete={handleClickDelete} />
             ))}
             <div
               className="flex aspect-video w-full flex-col items-center justify-center rounded-lg border-2 border-transparent bg-gray-100 text-gray-400 duration-100 hover:border-gray-200 hover:text-gray-500"
@@ -65,6 +89,18 @@ const HomepageHeroImage = () => {
         isOpen={isOpenUploadImageModal}
         onClose={onCloseUploadImageModal}
         onSubmit={handleConfirmUpdate}
+      />
+      <DeleteConfirmationModal
+        title="Xóa hình ảnh"
+        description={
+          <div>
+            <div>Bạn có chắc chắn muốn xóa vĩnh viễn hình ảnh này?</div>
+            <div>Thao tác này không thể hoàn lại.</div>
+          </div>
+        }
+        isOpen={isShowDeleteConfirmationModal}
+        onClose={handleCloseDeleteConfirmationModal}
+        onSubmit={handleConfirmDelete}
       />
     </>
   );

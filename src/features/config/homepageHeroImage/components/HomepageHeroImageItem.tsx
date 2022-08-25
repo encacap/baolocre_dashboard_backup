@@ -3,9 +3,10 @@ import { ImageDataType } from '../../../../app/types/upload';
 
 interface HomepageHeroImageItemProps {
   image: ImageDataType;
+  onDelete: (image: ImageDataType) => void;
 }
 
-const HomepageHeroImageItem = ({ image }: HomepageHeroImageItemProps) => {
+const HomepageHeroImageItem = ({ image, onDelete }: HomepageHeroImageItemProps) => {
   return (
     <div
       key={image.id}
@@ -18,7 +19,12 @@ const HomepageHeroImageItem = ({ image }: HomepageHeroImageItemProps) => {
           className="h-full w-full object-cover object-center"
         />
         <div className="absolute inset-0 flex h-full w-full items-center justify-center bg-black bg-opacity-60 opacity-0 duration-100 group-hover:opacity-100">
-          <div className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border-2 border-white text-white duration-100 hover:bg-white hover:bg-opacity-20">
+          <div
+            className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border-2 border-white text-white duration-100 hover:bg-white hover:bg-opacity-20"
+            role="button"
+            tabIndex={0}
+            onClick={() => onDelete(image)}
+          >
             <Trash size="18" />
           </div>
         </div>
