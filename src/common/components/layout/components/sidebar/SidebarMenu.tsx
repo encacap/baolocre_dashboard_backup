@@ -25,9 +25,10 @@ const SidebarMenu = ({ items }: SidebarMenuProps) => {
     const sidebarItemWrapper = sidebarItemWrapperRef.current;
     const sidebarItemActivatedMask = sidebarItemActivatedMaskRef.current;
     if (!sidebarItemWrapper || !sidebarItemActivatedMask) {
-      return;
+      return undefined;
     }
     const activatedItem = sidebarItemWrapper.querySelector('.active') as HTMLDivElement;
+    let timerId: number;
     if (activatedItem) {
       const activatedItemRect = activatedItem.getBoundingClientRect();
       const activatedItemHeight = activatedItemRect.height;
@@ -36,8 +37,14 @@ const SidebarMenu = ({ items }: SidebarMenuProps) => {
       sidebarItemActivatedMask.style.height = `${activatedItemHeight}px`;
       sidebarItemActivatedMask.style.top = `${activatedItemTop}px`;
 
-      sidebarItemActivatedMask.classList.add('duration-150');
+      timerId = window.setTimeout(() => {
+        sidebarItemActivatedMask.classList.add('duration-150');
+      }, 0);
     }
+
+    return () => {
+      window.clearTimeout(timerId);
+    };
   }, [pathname]);
 
   return (
@@ -54,9 +61,11 @@ const SidebarMenu = ({ items }: SidebarMenuProps) => {
         ))}
       </Wrap>
       <Box
-        className="absolute top-0 z-0 h-14 w-full rounded-md bg-teal-100"
+        className="absolute top-0 z-0 h-12 w-full rounded-md bg-teal-100"
         ref={sidebarItemActivatedMaskRef}
-      />
+      >
+        <Box className="absolute top-1/2 h-5 w-1 -translate-y-1/2 rounded-r-xl bg-teal-500" />
+      </Box>
     </Box>
   );
 };
