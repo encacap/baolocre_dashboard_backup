@@ -20,6 +20,7 @@ const ProtectedRoutes = () => {
 
   useLayoutEffect(() => {
     if (currentUser?.id) {
+      setIsGetting(false);
       return;
     }
 
