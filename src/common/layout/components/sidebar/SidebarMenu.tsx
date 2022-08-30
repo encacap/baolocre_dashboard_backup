@@ -1,7 +1,7 @@
 import { Box, Wrap } from '@chakra-ui/react';
 import { createRef, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { SidebarMenuItemsType } from '../../../../../app/types/common';
+import { SidebarMenuItemsType } from '../../../../app/types/common';
 import SidebarMenuItem from './SidebarMenuItem';
 
 interface SidebarMenuProps {

@@ -1,11 +1,12 @@
 import _ from 'lodash';
 import { useCallback, useLayoutEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import Layout from '../../common/components/layout/Layout';
 import PrepareOverlay from '../../common/components/loading/PrepareOverlay';
 import useDispatch from '../../common/hooks/useDispatch';
 import useSelector from '../../common/hooks/useSelector';
+import Layout from '../../common/layout/Layout';
 import ConfigRoutes from '../../features/config/routes/ConfigRoutes';
+import EstateRoutes from '../../features/estate/routes/EstateRoutes';
 import { AUTHENTICATION_PATH } from '../constants/URL';
 import { userService } from '../services';
 import { setUser } from '../slices/userSlice';
@@ -53,6 +54,7 @@ const ProtectedRoutes = () => {
           <Routes>
             <Route path="/" element="Home" />
             <Route path="configs/*" element={<ConfigRoutes />} />
+            <Route path="estates/*" element={<EstateRoutes />} />
           </Routes>
         </Layout>
       )}

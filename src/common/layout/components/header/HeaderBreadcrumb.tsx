@@ -1,7 +1,7 @@
 import { ArrowRight2 } from 'iconsax-react';
 import { Link } from 'react-router-dom';
 import { twMerge } from 'tailwind-merge';
-import useSelector from '../../../../hooks/useSelector';
+import useSelector from '../../../hooks/useSelector';
 
 const HeaderBreadcrumb = () => {
   const { breadcrumbs } = useSelector((state) => state.layout);

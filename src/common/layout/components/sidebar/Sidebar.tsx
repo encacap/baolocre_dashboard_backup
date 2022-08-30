@@ -1,7 +1,7 @@
 import { Box, BoxProps, Flex, Icon } from '@chakra-ui/react';
-import { Element3, Setting3 } from 'iconsax-react';
-import { SidebarMenuItemsType as SidebarMenuItemType } from '../../../../../app/types/common';
-import EncacapLogo from '../../../EncacapLogo';
+import { Element3, Firstline, Setting3 } from 'iconsax-react';
+import { SidebarMenuItemsType as SidebarMenuItemType } from '../../../../app/types/common';
+import EncacapLogo from '../../../components/EncacapLogo';
 import SidebarMenu from './SidebarMenu';
 
 interface SidebarProps {
@@ -15,6 +15,12 @@ const Sidebar = ({ w }: SidebarProps) => {
       icon: <Icon as={Element3} />,
       label: 'Tổng quan',
       path: '/',
+    },
+    {
+      key: 'estate',
+      icon: <Icon as={Firstline} />,
+      label: 'Quản lý bài viết',
+      path: '/estates',
     },
     {
       key: 'configs',

@@ -1,8 +1,8 @@
 import _ from 'lodash';
 import { useEffect } from 'react';
-import { setBreadcrumbs } from '../../../../../app/slices/layoutSlice';
-import { BreadcrumbType } from '../../../../../app/types/common';
-import useDispatch from '../../../../hooks/useDispatch';
+import { setBreadcrumbs } from '../../../../app/slices/layoutSlice';
+import { BreadcrumbType } from '../../../../app/types/common';
+import useDispatch from '../../../hooks/useDispatch';
 
 interface ContentWrapperProps {
   breadcrumbs?: BreadcrumbType[];
