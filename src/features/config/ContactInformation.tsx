@@ -17,7 +17,7 @@ const ContactInformation = () => {
     register,
     handleSubmit,
     setValue,
-    formState: { isSubmitting, errors, isSubmitted },
+    formState: { isSubmitting, errors },
   } = useForm<ContactInformationDataType>({
     resolver: yupResolver(updateContactInformationSchema),
   });
@@ -45,16 +45,6 @@ const ContactInformation = () => {
         setIsLoading(false);
       });
   }, []);
-
-  useEffect(() => {
-    if (isSubmitting) {
-      setIsLoading(true);
-      return;
-    }
-    if (isSubmitted) {
-      setIsLoading(false);
-    }
-  }, [isSubmitting, isSubmitted]);
 
   return (
     <div className="">
@@ -117,8 +107,8 @@ const ContactInformation = () => {
           colorScheme="teal"
           className="mt-4"
           loadingText="Đang cập nhật"
-          isLoading={isLoading}
-          disabled={isLoading}
+          isLoading={isSubmitting}
+          disabled={isLoading || isSubmitting}
         >
           Cập nhật
         </Button>
