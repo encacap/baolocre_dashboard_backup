@@ -13,6 +13,9 @@ const getImageURLFromFile = (file: FileType) => {
 
 const getVariantObjectFromImage = (image: ImageDataType) => {
   const { variants } = image;
+  if (!variants) {
+    return {};
+  }
   const results: ImageVariantDataType = {};
   variants.forEach((variant) => {
     const variantName = variant.split('/').pop();

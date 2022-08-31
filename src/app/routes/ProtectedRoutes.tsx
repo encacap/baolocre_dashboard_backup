@@ -5,6 +5,7 @@ import PrepareOverlay from '../../common/components/loading/PrepareOverlay';
 import useDispatch from '../../common/hooks/useDispatch';
 import useSelector from '../../common/hooks/useSelector';
 import Layout from '../../common/layout/Layout';
+import CategoryRoutes from '../../features/category/routes/CategoryRoutes';
 import ConfigRoutes from '../../features/config/routes/ConfigRoutes';
 import EstateRoutes from '../../features/estate/routes/EstateRoutes';
 import { AUTHENTICATION_PATH } from '../constants/URL';
@@ -55,6 +56,7 @@ const ProtectedRoutes = () => {
             <Route path="/" element="Home" />
             <Route path="configs/*" element={<ConfigRoutes />} />
             <Route path="estates/*" element={<EstateRoutes />} />
+            <Route path="categories/*" element={<CategoryRoutes />} />
           </Routes>
         </Layout>
       )}

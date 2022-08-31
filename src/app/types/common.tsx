@@ -50,3 +50,16 @@ export interface FileType extends Partial<File> {
   id?: string;
   response?: string;
 }
+
+export interface TableColumnType {
+  label?: string;
+  key: string;
+  className?: string;
+  textAlign?: 'left' | 'center' | 'right';
+  width?: string;
+}
+
+export interface TableRowDataType {
+  key: string;
+  [key: string]: unknown;
+}
