@@ -5,12 +5,14 @@ import { CategoryTypeEnum } from '../../app/enums/data';
 import { categoryService } from '../../app/services';
 import { CategoryItemType } from '../../app/types/category';
 import { TableColumnType, TableRowDataType } from '../../app/types/common';
+import LoadingSkeleton from '../../common/components/loading/LoadingSkeleton';
 import Table from '../../common/components/table/Table';
 import ContentWrapper from '../../common/layout/components/content/ContentWrapper';
 import ContentWrapperBody from '../../common/layout/components/content/ContentWrapperBody';
 import ContentWrapperHeader from '../../common/layout/components/content/ContentWrapperHeader';
 import { getImageURLFromImage } from '../../common/utils/upload';
 import CategoryRowAction from './components/CategoryRowAction';
+import CategoryRowActionSkeleton from './components/CategoryRowActionSkeleton';
 import CategoryRowImage from './components/CategoryRowImage';
 
 interface CategoryRenderedItemType extends Omit<CategoryItemType, 'image' | 'type'>, TableRowDataType {
@@ -21,11 +23,13 @@ interface CategoryRenderedItemType extends Omit<CategoryItemType, 'image' | 'typ
 
 const Category = () => {
   const [categoryList, setCategoryList] = useState<CategoryItemType[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const columns: TableColumnType[] = [
     {
       key: 'image',
       width: '20',
+      skeleton: <LoadingSkeleton className="h-10 w-10 rounded-full" />,
     },
     {
       key: 'name',
@@ -44,6 +48,7 @@ const Category = () => {
       label: 'Hành động',
       className: 'text-right',
       textAlign: 'right',
+      skeleton: <CategoryRowActionSkeleton />,
     },
   ];
 
@@ -77,7 +82,13 @@ const Category = () => {
     }));
 
   useEffect(() => {
-    categoryService.getCategories().then(setCategoryList);
+    setIsLoading(true);
+    categoryService
+      .getCategories()
+      .then(setCategoryList)
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, []);
 
   return (
@@ -92,7 +103,7 @@ const Category = () => {
         </div>
       </ContentWrapperHeader>
       <ContentWrapperBody>
-        <Table columns={columns} dataSource={formatDataSource(categoryList)} />
+        <Table columns={columns} dataSource={formatDataSource(categoryList)} isLoading={isLoading} />
       </ContentWrapperBody>
     </ContentWrapper>
   );

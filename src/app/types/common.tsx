@@ -57,6 +57,7 @@ export interface TableColumnType {
   className?: string;
   textAlign?: 'left' | 'center' | 'right';
   width?: string;
+  skeleton?: JSX.Element;
 }
 
 export interface TableRowDataType {
