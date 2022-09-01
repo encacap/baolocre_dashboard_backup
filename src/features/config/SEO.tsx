@@ -1,7 +1,7 @@
 import { Button } from '@chakra-ui/react';
 import { useEffect, useRef } from 'react';
 import Alert from '../../common/components/alert/Alert';
-import InputGroup from '../../common/components/InputGroup';
+import InputGroup from '../../common/components/form/InputGroup';
 
 const SEO = () => {
   const alertRef = useRef<HTMLDivElement>(null);

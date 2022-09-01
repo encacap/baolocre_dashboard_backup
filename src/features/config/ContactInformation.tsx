@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { configService } from '../../app/services';
 import { ContactInformationDataType } from '../../app/types/config';
-import InputGroup from '../../common/components/InputGroup';
+import InputGroup from '../../common/components/form/InputGroup';
 import useToast from '../../common/hooks/useToast';
 import { updateContactInformationSchema } from '../../common/utils/validationSchemas/config';
 

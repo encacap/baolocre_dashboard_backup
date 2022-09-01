@@ -10,7 +10,7 @@ import { ImageDataType } from '../../../app/types/upload';
 import useToast from '../../hooks/useToast';
 import { getErrorMessageFromResponse } from '../../utils/error';
 import { imageUploadFormSchema } from '../../utils/validationSchemas/upload';
-import InputGroup from '../InputGroup';
+import InputGroup from '../form/InputGroup';
 import ImageUploadPlaceholder from './ImageUploadPlaceholder';
 import ImageUploadPreview from './ImageUploadPreview';
 
