@@ -11,6 +11,7 @@ import ContentWrapper from '../../common/layout/components/content/ContentWrappe
 import ContentWrapperBody from '../../common/layout/components/content/ContentWrapperBody';
 import ContentWrapperHeader from '../../common/layout/components/content/ContentWrapperHeader';
 import { getImageURLFromImage } from '../../common/utils/upload';
+import CategoryModifyModal from './components/CategoryModifyModal';
 import CategoryRowAction from './components/CategoryRowAction';
 import CategoryRowActionSkeleton from './components/CategoryRowActionSkeleton';
 import CategoryRowImage from './components/CategoryRowImage';
@@ -24,6 +25,7 @@ interface CategoryRenderedItemType extends Omit<CategoryItemType, 'image' | 'typ
 const Category = () => {
   const [categoryList, setCategoryList] = useState<CategoryItemType[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isShowModifyModal, setIsShowModifyModal] = useState(false);
 
   const columns: TableColumnType[] = [
     {
@@ -96,7 +98,7 @@ const Category = () => {
       <ContentWrapperHeader>
         <div>Quản lý danh mục</div>
         <div>
-          <Button colorScheme="teal">
+          <Button colorScheme="teal" onClick={() => setIsShowModifyModal(true)}>
             <Add className="mr-2" />
             Thêm danh mục
           </Button>
@@ -105,6 +107,7 @@ const Category = () => {
       <ContentWrapperBody>
         <Table columns={columns} dataSource={formatDataSource(categoryList)} isLoading={isLoading} />
       </ContentWrapperBody>
+      <CategoryModifyModal isOpen={isShowModifyModal} onClose={() => setIsShowModifyModal(false)} />
     </ContentWrapper>
   );
 };
