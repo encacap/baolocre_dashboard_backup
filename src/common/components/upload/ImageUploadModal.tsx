@@ -6,7 +6,7 @@ import { FieldArrayWithId, useFieldArray, useForm } from 'react-hook-form';
 import { twMerge } from 'tailwind-merge';
 import { uploadService } from '../../../app/services';
 import { AxiosErrorType, FileType } from '../../../app/types/common';
-import { ImageDataType } from '../../../app/types/upload';
+import { ImageDataType } from '../../../app/types/props';
 import useToast from '../../hooks/useToast';
 import { getErrorMessageFromResponse } from '../../utils/error';
 import { imageUploadFormSchema } from '../../utils/validationSchemas/upload';
@@ -15,6 +15,7 @@ import ImageUploadPlaceholder from './ImageUploadPlaceholder';
 import ImageUploadPreview from './ImageUploadPreview';
 
 type ImageUploadModalProps = Omit<ModalProps, 'children' | 'className'> & {
+  multiple?: boolean;
   onClose: () => void;
   onSubmit: (images: ImageDataType[]) => void;
 };
@@ -27,7 +28,13 @@ type ImageUploadModalFormDataType = {
   imageUrls: ImageURLItemType[];
 };
 
-const ImageUploadModal = ({ onClose, onSubmit, ...props }: ImageUploadModalProps) => {
+const ImageUploadModal = ({
+  blockScrollOnMount = true,
+  multiple = false,
+  onClose,
+  onSubmit,
+  ...props
+}: ImageUploadModalProps) => {
   const [currentFileList, setCurrentFileList] = useState<FileType[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -138,7 +145,13 @@ const ImageUploadModal = ({ onClose, onSubmit, ...props }: ImageUploadModalProps
   };
 
   return (
-    <Modal blockScrollOnMount isCentered closeOnOverlayClick onClose={handleCloseModal} {...props}>
+    <Modal
+      blockScrollOnMount={blockScrollOnMount}
+      isCentered
+      closeOnOverlayClick
+      onClose={handleCloseModal}
+      {...props}
+    >
       <ModalOverlay />
       <ModalContent className="py-6 px-7">
         <div className="flex items-center justify-between">
@@ -159,6 +172,7 @@ const ImageUploadModal = ({ onClose, onSubmit, ...props }: ImageUploadModalProps
           <ImageUploadPlaceholder
             isCollapsed={!!currentFileList?.length}
             disabled={isSubmitting}
+            multiple={multiple}
             onChange={handleChangeFileInput}
           />
         </div>

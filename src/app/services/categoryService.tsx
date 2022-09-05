@@ -6,5 +6,12 @@ const getCategories = async (): Promise<CategoryItemType[]> => {
   return response.data.data;
 };
 
-// eslint-disable-next-line import/prefer-default-export
-export { getCategories };
+const createCategory = async (category: Partial<CategoryItemType>): Promise<CategoryItemType> => {
+  const response = await axiosInstance.post('categories', {
+    ...category,
+    image: category?.image?.id || null,
+  });
+  return response.data.data;
+};
+
+export { getCategories, createCategory };

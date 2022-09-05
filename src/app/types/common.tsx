@@ -49,6 +49,7 @@ export interface AlertProps extends React.HTMLAttributes<HTMLDivElement> {
 export interface FileType extends Partial<File> {
   id?: string;
   response?: string;
+  variants?: string[];
 }
 
 export interface TableColumnType {

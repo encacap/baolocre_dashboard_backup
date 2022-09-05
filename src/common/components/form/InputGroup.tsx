@@ -5,18 +5,30 @@ import {
   FormLabel,
   Input,
   InputProps,
+  Select,
+  SelectProps,
   Textarea,
   TextareaProps,
 } from '@chakra-ui/react';
 import React, { forwardRef } from 'react';
 import { twMerge } from 'tailwind-merge';
+import { InputImageProps } from '../../../app/types/props';
+import InputImage from './InputImage';
+
+interface OptionType {
+  label: string;
+  value: string;
+}
 
 interface InputGroupProps extends React.HTMLAttributes<HTMLDivElement> {
   type?: HTMLInputElement['type'];
   label?: string;
   labelClassName?: string;
   inputProps?: InputProps;
+  imageInputProps?: InputImageProps;
   textareaProps?: TextareaProps;
+  selectProps?: SelectProps;
+  options?: OptionType[];
   placeholder?: string;
   errorMessage?: string;
   disabled?: boolean;
@@ -31,6 +43,9 @@ const InputGroup = (
     errorMessage,
     inputProps,
     textareaProps,
+    selectProps,
+    imageInputProps,
+    options,
     disabled,
     className,
     ...props
@@ -74,7 +89,19 @@ const InputGroup = (
           {...textareaProps}
         />
       )}
-      <Collapse in={!!errorMessage} endingHeight={26}>
+      {type === 'select' && (
+        <Select placeholder={placeholder} focusBorderColor="teal.500" disabled={disabled} {...selectProps}>
+          {options?.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </Select>
+      )}
+      {type === 'file' && (
+        <InputImage placeholder={placeholder} focusBorderColor="teal.500" {...imageInputProps} />
+      )}
+      <Collapse in={!!errorMessage}>
         <FormErrorMessage>{errorMessage}</FormErrorMessage>
       </Collapse>
     </FormControl>

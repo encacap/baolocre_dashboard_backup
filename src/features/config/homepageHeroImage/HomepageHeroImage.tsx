@@ -2,7 +2,7 @@ import { Spinner, useDisclosure } from '@chakra-ui/react';
 import { AddSquare } from 'iconsax-react';
 import { useEffect, useState } from 'react';
 import { configService } from '../../../app/services';
-import { ImageDataType } from '../../../app/types/upload';
+import { ImageDataType } from '../../../app/types/props';
 import DeleteConfirmationModal from '../../../common/components/confirmationModal/DeleteConfirmationModal';
 import ImageUploadModal from '../../../common/components/upload/ImageUploadModal';
 import useToast from '../../../common/hooks/useToast';

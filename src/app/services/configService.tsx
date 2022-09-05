@@ -1,6 +1,6 @@
 import axiosInstance from '../../common/utils/http/axiosInstance';
 import { ContactInformationDataType } from '../types/config';
-import { ImageDataType } from '../types/upload';
+import { ImageDataType } from '../types/props';
 
 const getContactInformation = async (): Promise<ContactInformationDataType> => {
   const response = await axiosInstance.get('configs/contact');

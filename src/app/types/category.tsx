@@ -1,5 +1,5 @@
 import { CategoryTypeEnum } from '../enums/data';
-import { ImageDataType } from './upload';
+import { ImageDataType } from './props';
 
 export interface CategoryItemType {
   id: string;

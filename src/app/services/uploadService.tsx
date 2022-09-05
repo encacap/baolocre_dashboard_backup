@@ -1,7 +1,7 @@
 import axiosInstance from '../../common/utils/http/axiosInstance';
 import { IMAGE_API_PATH } from '../constants/API';
 import { FileType } from '../types/common';
-import { ImageDataType, UploadImageParamType } from '../types/upload';
+import { ImageDataType, UploadImageParamType } from '../types/props';
 
 const getImageFileFromUrl = async (url: string) => {
   const response = await axiosInstance.get(url, {

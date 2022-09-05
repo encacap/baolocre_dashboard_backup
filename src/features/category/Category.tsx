@@ -83,7 +83,7 @@ const Category = () => {
       actions: <CategoryRowAction id="1" onEdit={handleClickEdit} onDelete={handleClickDelete} />,
     }));
 
-  useEffect(() => {
+  const getCategoryList = () => {
     setIsLoading(true);
     categoryService
       .getCategories()
@@ -91,6 +91,15 @@ const Category = () => {
       .finally(() => {
         setIsLoading(false);
       });
+  };
+
+  const handleFinishModifyCategory = () => {
+    setIsShowModifyModal(false);
+    getCategoryList();
+  };
+
+  useEffect(() => {
+    getCategoryList();
   }, []);
 
   return (
@@ -107,7 +116,11 @@ const Category = () => {
       <ContentWrapperBody>
         <Table columns={columns} dataSource={formatDataSource(categoryList)} isLoading={isLoading} />
       </ContentWrapperBody>
-      <CategoryModifyModal isOpen={isShowModifyModal} onClose={() => setIsShowModifyModal(false)} />
+      <CategoryModifyModal
+        isOpen={isShowModifyModal}
+        onClose={() => setIsShowModifyModal(false)}
+        onFinish={handleFinishModifyCategory}
+      />
     </ContentWrapper>
   );
 };

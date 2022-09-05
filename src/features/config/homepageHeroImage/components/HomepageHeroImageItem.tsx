@@ -1,5 +1,5 @@
 import { Eye, Trash } from 'iconsax-react';
-import { ImageDataType } from '../../../../app/types/upload';
+import { ImageDataType } from '../../../../app/types/props';
 import { getImageURLFromImage } from '../../../../common/utils/upload';
 
 interface HomepageHeroImageItemProps {
