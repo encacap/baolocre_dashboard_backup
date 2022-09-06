@@ -1,18 +1,22 @@
-import { AddCircle, Image } from 'iconsax-react';
+import { Image } from 'iconsax-react';
 import { twMerge } from 'tailwind-merge';
 
 interface ImageUploadPlaceholderProps {
   isCollapsed: boolean;
+  isReplaced?: boolean;
   disabled?: boolean;
   multiple?: boolean;
+  className?: string;
   onClick?: () => void;
   onChange?: (fileList: File[] | null) => void;
 }
 
 const ImageUploadPlaceholder = ({
-  isCollapsed,
   disabled,
   multiple = false,
+  className,
+  isCollapsed,
+  isReplaced = false,
   onChange,
   onClick,
 }: ImageUploadPlaceholderProps) => {
@@ -27,7 +31,7 @@ const ImageUploadPlaceholder = ({
 
   return (
     <div
-      className={twMerge('group relative h-full w-full duration-100', isCollapsed && 'h-20')}
+      className={twMerge('group relative h-full w-full duration-100', isCollapsed && 'h-20', className)}
       role="button"
       tabIndex={0}
       onClick={onClick}
@@ -39,9 +43,11 @@ const ImageUploadPlaceholder = ({
           !disabled && 'group-hover:border-gray-200 group-hover:bg-gray-100',
         )}
       >
-        {isCollapsed ? <AddCircle size={32} /> : <Image size={32} />}
-        {!isCollapsed && (
+        <Image size={32} />
+        {!isCollapsed ? (
           <div className="mt-4 text-center text-sm">Nhấn vào đây để chọn hình ảnh từ máy tính của bạn.</div>
+        ) : (
+          <div className="mt-1.5 text-center text-xs">{isReplaced ? 'Thay đổi' : 'Thêm ảnh'}</div>
         )}
       </div>
       {!onClick && (

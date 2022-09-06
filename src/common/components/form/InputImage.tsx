@@ -1,5 +1,4 @@
 import { forwardRef, useState } from 'react';
-import { twMerge } from 'tailwind-merge';
 import { FileType } from '../../../app/types/common';
 import { ImageDataType, InputImageProps } from '../../../app/types/props';
 import ImageUploadModal from '../upload/ImageUploadModal';
@@ -26,29 +25,21 @@ const InputImage = (
 
   return (
     <>
-      <div
-        ref={ref}
-        className={twMerge(
-          !!value?.length && multiple && 'grid grid-cols-4 gap-4',
-          !!value?.length && !multiple && 'grid aspect-video w-full grid-cols-1 gap-4',
-          !value?.length && 'aspect-video w-full',
-        )}
-      >
+      <div ref={ref} className="grid grid-cols-5 gap-4">
         {value?.map((image) => (
           <ImageUploadPreview
             key={image.id}
             file={image}
             onRemove={handleRemove}
-            className={twMerge(multiple ? 'h-20' : 'h-full')}
+            className="aspect-square h-auto w-full"
           />
         ))}
-        {multiple ||
-          (!multiple && !value?.length && (
-            <ImageUploadPlaceholder
-              isCollapsed={!!value?.length}
-              onClick={() => setIsShowUploadModal(true)}
-            />
-          ))}
+        <ImageUploadPlaceholder
+          className="aspect-square h-auto"
+          isCollapsed
+          isReplaced={!multiple && !!value?.length}
+          onClick={() => setIsShowUploadModal(true)}
+        />
       </div>
       <ImageUploadModal
         isOpen={isShowUploadModal}

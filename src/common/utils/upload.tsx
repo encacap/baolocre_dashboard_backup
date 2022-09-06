@@ -30,7 +30,7 @@ const getImageURLFromFile = (file: FileType) => {
     return file.response;
   }
   if (file.variants) {
-    return getImageURLFromImage(file as ImageDataType, 'public');
+    return getImageURLFromImage(file as ImageDataType, 'thumbnail');
   }
   return URL.createObjectURL(file as File);
 };
