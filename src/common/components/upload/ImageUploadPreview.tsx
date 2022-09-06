@@ -31,19 +31,21 @@ const ImageUploadPreview = ({ file, disabled, className, onRemove }: ImageUpload
         className="h-full w-full rounded-md bg-black object-contain object-center"
         alt=""
       />
-      <div className="absolute inset-2 flex items-center justify-center rounded-md bg-black bg-opacity-60 opacity-0 duration-100 group-hover:opacity-100">
-        <div
-          className={twMerge(
-            'flex h-6 w-6 cursor-pointer items-center justify-center text-white duration-100',
-            disabled && 'border-gray-200 text-gray-200',
-          )}
-          role="button"
-          tabIndex={0}
-          onClick={() => handleRemove()}
-        >
-          <Trash size="20" />
+      {!disabled && (
+        <div className="absolute inset-2 flex items-center justify-center rounded-md bg-black bg-opacity-60 opacity-0 duration-100 group-hover:opacity-100">
+          <div
+            className={twMerge(
+              'flex h-6 w-6 cursor-pointer items-center justify-center text-white duration-100',
+              disabled && 'border-gray-200 text-gray-200',
+            )}
+            role="button"
+            tabIndex={0}
+            onClick={() => handleRemove()}
+          >
+            <Trash size="20" />
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

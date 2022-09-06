@@ -80,6 +80,10 @@ const ImageUploadModal = ({
     setCurrentFileList((prevFileList) => {
       const newFileList = Array.from(fileList);
 
+      if (!multiple) {
+        return newFileList;
+      }
+
       if (prevFileList) {
         return [...prevFileList, ...newFileList];
       }
@@ -135,6 +139,9 @@ const ImageUploadModal = ({
             response: url,
           },
         ]);
+        if (!multiple && fields.length > 0) {
+          return;
+        }
         append({
           url: '',
         });
@@ -171,6 +178,7 @@ const ImageUploadModal = ({
             ))}
           <ImageUploadPlaceholder
             isCollapsed={!!currentFileList?.length}
+            isReplaced={!multiple && !!currentFileList?.length}
             disabled={isSubmitting}
             multiple={multiple}
             onChange={handleChangeFileInput}
