@@ -14,4 +14,6 @@ const createCategory = async (category: Partial<CategoryItemType>): Promise<Cate
   return response.data.data;
 };
 
-export { getCategories, createCategory };
+const deleteCategoryById = async (id: string): Promise<void> => axiosInstance.delete(`categories/${id}`);
+
+export { getCategories, createCategory, deleteCategoryById };

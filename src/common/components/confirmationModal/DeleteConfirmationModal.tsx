@@ -59,10 +59,8 @@ const DeleteConfirmationModal = ({
                 </svg>
               </div>
               <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                <h3 className="text-lg font-medium leading-6 text-gray-900" id="modal-title">
-                  {title}
-                </h3>
-                <div className="mt-2 mb-1">
+                <h3 className="mt-2 text-lg font-medium leading-6 text-gray-900">{title}</h3>
+                <div className="mt-4 mb-2">
                   {preview && <div className="mt-2">{preview}</div>}
                   <div className="whitespace-pre-line text-sm text-gray-500">{description}</div>
                 </div>
