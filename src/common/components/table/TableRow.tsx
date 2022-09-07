@@ -12,11 +12,11 @@ interface TableRowProps {
 const TableRow = ({ dataSource, columns, isLoading }: TableRowProps) => {
   return (
     <Tbody className="relative">
-      {isLoading && <TableLoadingOverlay />}
-      {dataSource.map((data) => (
+      {dataSource.map((data, rowIndex) => (
         <Tr key={data.key}>
-          {columns.map(({ key: columnKey }) => (
+          {columns.map(({ key: columnKey }, columnIndex) => (
             <Td px="5" py="5" key={columnKey}>
+              {isLoading && rowIndex === 0 && columnIndex === 0 && <TableLoadingOverlay />}
               {(data[columnKey] as React.ReactNode) || '-'}
             </Td>
           ))}

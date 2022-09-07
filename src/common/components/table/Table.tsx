@@ -15,7 +15,7 @@ const Table = ({ columns, dataSource, isLoading }: TableProps) => {
     <TableContainer>
       <ChakraTable colorScheme="gray">
         <TableHead items={columns} />
-        {isLoading && !dataSource && <TableRowSkeleton columns={columns} />}
+        {isLoading && !dataSource.length && <TableRowSkeleton columns={columns} />}
         {dataSource && <TableRow dataSource={dataSource} columns={columns} isLoading={isLoading} />}
       </ChakraTable>
     </TableContainer>
