@@ -126,7 +126,7 @@ const CategoryModifyModal = ({
             errorMessage={errors.name?.message}
             inputProps={{ ...register('name') }}
             isRequired
-            disabled={isLoading}
+            disabled={isLoading || isSubmitting}
           />
           <InputGroup
             label="SLUG"
@@ -135,7 +135,7 @@ const CategoryModifyModal = ({
             inputProps={{
               ...register('slug'),
             }}
-            disabled={isLoading}
+            disabled={isLoading || isSubmitting}
           />
           <InputGroup
             type="select"
@@ -155,7 +155,7 @@ const CategoryModifyModal = ({
             ]}
             selectProps={{ ...register('type') }}
             isRequired
-            disabled={isLoading}
+            disabled={isLoading || isSubmitting}
           />
         </div>
         <Controller
@@ -172,7 +172,7 @@ const CategoryModifyModal = ({
                 onChange: (images) => field.onChange(images[0] || null),
               }}
               isRequired
-              disabled={isLoading}
+              disabled={isLoading || isSubmitting}
             />
           )}
         />
