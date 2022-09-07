@@ -32,6 +32,7 @@ interface InputGroupProps extends React.HTMLAttributes<HTMLDivElement> {
   placeholder?: string;
   errorMessage?: string;
   disabled?: boolean;
+  isRequired?: boolean;
 }
 
 const InputGroup = (
@@ -48,6 +49,7 @@ const InputGroup = (
     options,
     disabled,
     className,
+    isRequired,
     ...props
   }: InputGroupProps,
   ref?: React.LegacyRef<HTMLDivElement>,
@@ -56,6 +58,7 @@ const InputGroup = (
     <FormControl
       ref={ref}
       isInvalid={!!errorMessage}
+      isRequired={isRequired}
       className={twMerge(className, disabled && 'cursor-not-allowed')}
       {...props}
     >
@@ -78,6 +81,7 @@ const InputGroup = (
           )}
           disabled={disabled}
           _disabled={{ opacity: 1 }}
+          required={false}
           {...inputProps}
         />
       )}
@@ -86,11 +90,18 @@ const InputGroup = (
           placeholder={placeholder}
           focusBorderColor="teal.500"
           disabled={disabled}
+          required={false}
           {...textareaProps}
         />
       )}
       {type === 'select' && (
-        <Select placeholder={placeholder} focusBorderColor="teal.500" disabled={disabled} {...selectProps}>
+        <Select
+          placeholder={placeholder}
+          focusBorderColor="teal.500"
+          disabled={disabled}
+          required={false}
+          {...selectProps}
+        >
           {options?.map((option) => (
             <option key={option.value} value={option.value}>
               {option.label}

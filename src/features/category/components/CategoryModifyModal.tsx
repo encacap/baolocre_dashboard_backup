@@ -125,6 +125,7 @@ const CategoryModifyModal = ({
             placeholder="Nhập tên danh mục"
             errorMessage={errors.name?.message}
             inputProps={{ ...register('name') }}
+            isRequired
             disabled={isLoading}
           />
           <InputGroup
@@ -153,6 +154,7 @@ const CategoryModifyModal = ({
               },
             ]}
             selectProps={{ ...register('type') }}
+            isRequired
             disabled={isLoading}
           />
         </div>
@@ -169,6 +171,7 @@ const CategoryModifyModal = ({
                 value: field.value ? [field.value] : [],
                 onChange: (images) => field.onChange(images[0] || null),
               }}
+              isRequired
               disabled={isLoading}
             />
           )}

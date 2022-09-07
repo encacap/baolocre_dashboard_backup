@@ -2,7 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-.chakra-toast__inner.css-atsuod {
+.chakra-toast__inner {
   padding-bottom: 0;
   margin-bottom: 0;
+}
+
+.chakra-form__required-indicator {
+  position: absolute;
+  font-size: 1.25rem;
+  top: 0.15rem;
 }
