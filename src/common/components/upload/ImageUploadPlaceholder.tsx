@@ -4,6 +4,7 @@ import { twMerge } from 'tailwind-merge';
 interface ImageUploadPlaceholderProps {
   isCollapsed: boolean;
   isReplaced?: boolean;
+  isInvalid?: boolean;
   disabled?: boolean;
   multiple?: boolean;
   className?: string;
@@ -17,6 +18,7 @@ const ImageUploadPlaceholder = ({
   className,
   isCollapsed,
   isReplaced = false,
+  isInvalid = false,
   onChange,
   onClick,
 }: ImageUploadPlaceholderProps) => {
@@ -41,6 +43,8 @@ const ImageUploadPlaceholder = ({
           'flex h-full flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-100 bg-gray-50 p-10 text-gray-400 duration-100',
           isCollapsed && 'w-full border-gray-100 p-2',
           !disabled && 'group-hover:border-gray-200 group-hover:bg-gray-100',
+          isInvalid &&
+            'border border-solid border-red-600 shadow-xs shadow-red-600 group-hover:border-red-600',
         )}
       >
         <Image size={32} />

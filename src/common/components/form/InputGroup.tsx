@@ -110,7 +110,12 @@ const InputGroup = (
         </Select>
       )}
       {type === 'file' && (
-        <InputImage placeholder={placeholder} focusBorderColor="teal.500" {...imageInputProps} />
+        <InputImage
+          placeholder={placeholder}
+          focusBorderColor="teal.500"
+          isInvalid={!!errorMessage}
+          {...imageInputProps}
+        />
       )}
       <Collapse in={!!errorMessage}>
         <FormErrorMessage>{errorMessage}</FormErrorMessage>

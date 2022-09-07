@@ -19,5 +19,6 @@ export interface UploadImageParamType {
 
 export interface InputImageProps extends Omit<InputProps, 'onChange' | 'value'> {
   value?: ImageDataType[];
+  isInvalid?: boolean;
   onChange?: (images: ImageDataType[]) => void;
 }

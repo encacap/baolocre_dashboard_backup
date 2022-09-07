@@ -6,7 +6,7 @@ import ImageUploadPlaceholder from '../upload/ImageUploadPlaceholder';
 import ImageUploadPreview from '../upload/ImageUploadPreview';
 
 const InputImage = (
-  { value, multiple, onChange }: InputImageProps,
+  { value, multiple, isInvalid, onChange }: InputImageProps,
   ref?: React.LegacyRef<HTMLInputElement>,
 ) => {
   const [isShowUploadModal, setIsShowUploadModal] = useState(false);
@@ -38,6 +38,7 @@ const InputImage = (
           className="aspect-square h-auto"
           isCollapsed
           isReplaced={!multiple && !!value?.length}
+          isInvalid={isInvalid}
           onClick={() => setIsShowUploadModal(true)}
         />
       </div>
