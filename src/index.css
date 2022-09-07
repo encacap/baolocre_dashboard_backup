@@ -1,3 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.chakra-toast__inner.css-atsuod {
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
