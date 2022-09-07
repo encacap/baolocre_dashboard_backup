@@ -1,8 +1,11 @@
 import { Button, ModalProps } from '@chakra-ui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
+import _ from 'lodash';
+import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { CategoryTypeEnum } from '../../../app/enums/data';
 import { categoryService } from '../../../app/services';
+import { CategoryItemType } from '../../../app/types/category';
 import { AxiosErrorType } from '../../../app/types/common';
 import { ImageDataType } from '../../../app/types/props';
 import InputGroup from '../../../common/components/form/InputGroup';
@@ -10,8 +13,10 @@ import Modal from '../../../common/components/Modal';
 import { createCategorySchema } from '../../../common/utils/validationSchemas/category';
 
 type CategoryModifyModalProps = Omit<ModalProps, 'children' | 'className'> & {
+  category: CategoryItemType | null;
   onClose: () => void;
   onFinish: () => void;
+  onFailed: (error: string) => void;
 };
 
 interface CategoryFormDataType {
@@ -22,14 +27,23 @@ interface CategoryFormDataType {
   image?: ImageDataType;
 }
 
-const CategoryModifyModal = ({ onClose, onFinish, ...props }: CategoryModifyModalProps) => {
+const CategoryModifyModal = ({
+  category,
+  onClose,
+  onFinish,
+  onFailed,
+  ...props
+}: CategoryModifyModalProps) => {
+  const [isLoading, setIsLoading] = useState(true);
+
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-    setError,
     control,
     reset,
+    setError,
+    setValue,
   } = useForm<CategoryFormDataType>({
     resolver: yupResolver(createCategorySchema),
   });
@@ -39,25 +53,60 @@ const CategoryModifyModal = ({ onClose, onFinish, ...props }: CategoryModifyModa
     onClose();
   };
 
-  const handleFinish = handleSubmit((data) => {
+  const handleResponseError = (error: AxiosErrorType) => {
+    const responseErrors = error?.response?.data.errors;
+    if (responseErrors) {
+      responseErrors.forEach((responseError) => {
+        setError(responseError.field as keyof CategoryFormDataType, {
+          type: 'manual',
+          message: responseError.message.join(', '),
+        });
+      });
+      return;
+    }
+    onFailed?.(error.response?.data.message || 'Vui lòng thử lại sau');
+  };
+
+  const handleCreateCategory = async (data: CategoryFormDataType) => {
     return categoryService
       .createCategory(data)
       .then(() => {
         reset();
         onFinish();
       })
-      .catch((error: AxiosErrorType) => {
-        const responseErrors = error?.response?.data.errors;
-        if (responseErrors) {
-          responseErrors.forEach((responseError) => {
-            setError(responseError.field as keyof CategoryFormDataType, {
-              type: 'manual',
-              message: responseError.message.join(', '),
-            });
-          });
-        }
-      });
+      .catch(handleResponseError);
+  };
+
+  const handleUpdateCategory = async (data: CategoryFormDataType) => {
+    if (!category) return null;
+    return categoryService
+      .updateCategoryById(category.id, data)
+      .then(() => {
+        reset();
+        onFinish();
+      })
+      .catch(handleResponseError);
+  };
+
+  const handleFinish = handleSubmit((data) => {
+    if (category) {
+      return handleUpdateCategory(data);
+    }
+    return handleCreateCategory(data);
   });
+
+  useEffect(() => {
+    if (!category || _.isEmpty(category)) {
+      setIsLoading(true);
+      return;
+    }
+    setValue('name', category.name);
+    setValue('description', category?.description || '');
+    setValue('slug', category.slug);
+    setValue('type', category.type);
+    setValue('image', category.image);
+    setIsLoading(false);
+  }, [category]);
 
   return (
     <Modal
@@ -76,6 +125,7 @@ const CategoryModifyModal = ({ onClose, onFinish, ...props }: CategoryModifyModa
             placeholder="Nhập tên danh mục"
             errorMessage={errors.name?.message}
             inputProps={{ ...register('name') }}
+            disabled={isLoading}
           />
           <InputGroup
             type="select"
@@ -93,6 +143,7 @@ const CategoryModifyModal = ({ onClose, onFinish, ...props }: CategoryModifyModa
               },
             ]}
             selectProps={{ ...register('type') }}
+            disabled={isLoading}
           />
         </div>
         <Controller
@@ -106,8 +157,9 @@ const CategoryModifyModal = ({ onClose, onFinish, ...props }: CategoryModifyModa
               errorMessage={errors.image?.message}
               imageInputProps={{
                 value: field.value ? [field.value] : [],
-                onChange: (images) => field.onChange(images[0]),
+                onChange: (images) => field.onChange(images[0] || null),
               }}
+              disabled={isLoading}
             />
           )}
         />
@@ -116,7 +168,7 @@ const CategoryModifyModal = ({ onClose, onFinish, ...props }: CategoryModifyModa
             type="submit"
             colorScheme="teal"
             className="w-full"
-            disabled={isSubmitting}
+            disabled={isSubmitting || isLoading}
             isLoading={isSubmitting}
           >
             Hoàn thành

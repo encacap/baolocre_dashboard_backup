@@ -14,6 +14,17 @@ const createCategory = async (category: Partial<CategoryItemType>): Promise<Cate
   return response.data.data;
 };
 
+const updateCategoryById = async (
+  id: string,
+  category: Partial<CategoryItemType>,
+): Promise<CategoryItemType> => {
+  const response = await axiosInstance.patch(`categories/${id}`, {
+    ...category,
+    image: category?.image?.id || null,
+  });
+  return response.data.data;
+};
+
 const deleteCategoryById = async (id: string): Promise<void> => axiosInstance.delete(`categories/${id}`);
 
-export { getCategories, createCategory, deleteCategoryById };
+export { getCategories, createCategory, updateCategoryById, deleteCategoryById };

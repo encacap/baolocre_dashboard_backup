@@ -77,6 +77,7 @@ const Category = () => {
       return;
     }
     setSelectedCategory(category);
+    setIsShowModifyModal(true);
   };
 
   const handleClickDelete = (id: string) => {
@@ -93,7 +94,7 @@ const Category = () => {
       ...data,
       key: data.id,
       type: getCategoryTypeNameByType(data.type),
-      image: <CategoryRowImage alt={data.name} src={getImageURLFromImage(data.image, 'public')} />,
+      image: <CategoryRowImage alt={data.name} src={getImageURLFromImage(data.image, 'thumbnail')} />,
       actions: <CategoryRowAction id={data.id} onEdit={handleClickEdit} onDelete={handleClickDelete} />,
     }));
 
@@ -136,6 +137,14 @@ const Category = () => {
       });
   };
 
+  const handleModifyCategoryFailed = (error: string) => {
+    if (selectedCategory) {
+      toast.error('Đã xảy ra lỗi khi cập nhật danh mục!', error);
+      return;
+    }
+    toast.error('Đã xảy ra lỗi khi thêm danh mục!', error);
+  };
+
   useEffect(() => {
     getCategoryList();
   }, []);
@@ -156,8 +165,10 @@ const Category = () => {
       </ContentWrapperBody>
       <CategoryModifyModal
         isOpen={isShowModifyModal}
+        category={selectedCategory}
         onClose={() => setIsShowModifyModal(false)}
         onFinish={handleFinishModifyCategory}
+        onFailed={handleModifyCategoryFailed}
       />
       <DeleteConfirmationModal
         title="Xóa danh mục"
