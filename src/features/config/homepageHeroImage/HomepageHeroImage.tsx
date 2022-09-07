@@ -1,5 +1,5 @@
 import { Spinner, useDisclosure } from '@chakra-ui/react';
-import { AddSquare } from 'iconsax-react';
+import { Image } from 'iconsax-react';
 import { useEffect, useState } from 'react';
 import { configService } from '../../../app/services';
 import { ImageDataType } from '../../../app/types/props';
@@ -51,7 +51,7 @@ const HomepageHeroImage = () => {
       .deleteHomepageHeroImageById(selectedToDeleteImage.id)
       .then((data) => {
         setImageList(data);
-        toast.success('Xóa hình ảnh thành công!');
+        toast.success('Thành công!', 'Hình ảnh đã bị xóa vĩnh viễn');
       })
       .finally(() => {
         setIsShowDeleteConfirmationModal(false);
@@ -78,8 +78,8 @@ const HomepageHeroImage = () => {
               role="button"
               tabIndex={0}
             >
-              {isSubmitting ? <Spinner boxSize={6} /> : <AddSquare size="24" />}
-              <div className="mt-2 text-sm font-semibold">{isSubmitting ? 'Đang xử lý' : 'Thêm ảnh'}</div>
+              {isSubmitting ? <Spinner boxSize={6} /> : <Image size="24" />}
+              <div className="mt-1.5 text-center text-xs">{isSubmitting ? 'Đang xử lý' : 'Thêm ảnh'}</div>
             </div>
           </div>
           {isSubmitting && <div className="absolute inset-0 bg-white bg-opacity-60" />}

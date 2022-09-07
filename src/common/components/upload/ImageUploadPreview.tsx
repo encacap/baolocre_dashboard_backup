@@ -21,7 +21,7 @@ const ImageUploadPreview = ({ file, disabled, className, onRemove }: ImageUpload
   return (
     <div
       className={twMerge(
-        'group relative aspect-video h-20 w-full overflow-hidden rounded-lg border-2 border-gray-100 p-2 duration-100',
+        'group relative aspect-video h-20 w-full overflow-hidden rounded-lg border-2 border-dashed border-gray-100 p-2 duration-100',
         !disabled && 'hover:border-gray-200',
         className,
       )}

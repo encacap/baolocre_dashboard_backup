@@ -21,7 +21,7 @@ const HomepageHeroImageItem = ({ image, onDelete }: HomepageHeroImageItemProps) 
         <img
           src={getImageURLFromImage(image, 'thumbnail')}
           alt={image.filename}
-          className="h-full w-full object-cover object-center"
+          className="h-full w-full bg-gray-100 object-cover object-center"
         />
         <div className="absolute inset-0 flex h-full w-full items-center justify-center space-x-2 bg-black bg-opacity-60 opacity-0 duration-100 group-hover:opacity-100">
           <div
