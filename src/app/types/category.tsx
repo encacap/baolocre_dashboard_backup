@@ -3,9 +3,9 @@ import { ImageDataType } from './props';
 
 export interface CategoryItemType {
   id: string;
-  name: string;
-  slug: string;
-  description?: string;
-  image: ImageDataType;
-  type: CategoryTypeEnum;
+  name: string | null;
+  slug: string | null;
+  description: string | null;
+  image: ImageDataType | null;
+  type: CategoryTypeEnum | null;
 }

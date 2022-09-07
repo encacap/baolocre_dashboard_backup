@@ -17,7 +17,10 @@ const getVariantObjectFromImage = (image: ImageDataType) => {
   return results;
 };
 
-const getImageURLFromImage = (image: ImageDataType, variantName: string) => {
+const getImageURLFromImage = (image: ImageDataType | null, variantName: string) => {
+  if (!image) {
+    return '';
+  }
   const variantObject = getVariantObjectFromImage(image);
   return variantObject[variantName] || variantObject.public || Object.values(variantObject)[0];
 };

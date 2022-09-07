@@ -7,7 +7,6 @@ import { CategoryTypeEnum } from '../../../app/enums/data';
 import { categoryService } from '../../../app/services';
 import { CategoryItemType } from '../../../app/types/category';
 import { AxiosErrorType } from '../../../app/types/common';
-import { ImageDataType } from '../../../app/types/props';
 import InputGroup from '../../../common/components/form/InputGroup';
 import Modal from '../../../common/components/Modal';
 import { createCategorySchema } from '../../../common/utils/validationSchemas/category';
@@ -19,14 +18,6 @@ type CategoryModifyModalProps = Omit<ModalProps, 'children' | 'className'> & {
   onFailed: (error: string) => void;
 };
 
-interface CategoryFormDataType {
-  name: string;
-  description: string;
-  slug?: string;
-  type: CategoryTypeEnum;
-  image?: ImageDataType;
-}
-
 const CategoryModifyModal = ({
   category,
   onClose,
@@ -36,6 +27,14 @@ const CategoryModifyModal = ({
 }: CategoryModifyModalProps) => {
   const [isLoading, setIsLoading] = useState(true);
 
+  const formDefaultValue = {
+    name: null,
+    slug: null,
+    description: null,
+    type: null,
+    image: null,
+  };
+
   const {
     register,
     handleSubmit,
@@ -44,12 +43,13 @@ const CategoryModifyModal = ({
     reset,
     setError,
     setValue,
-  } = useForm<CategoryFormDataType>({
+  } = useForm<CategoryItemType>({
     resolver: yupResolver(createCategorySchema),
+    defaultValues: formDefaultValue,
   });
 
   const handleCloseModal = () => {
-    reset();
+    reset(formDefaultValue);
     onClose();
   };
 
@@ -57,7 +57,7 @@ const CategoryModifyModal = ({
     const responseErrors = error?.response?.data.errors;
     if (responseErrors) {
       responseErrors.forEach((responseError) => {
-        setError(responseError.field as keyof CategoryFormDataType, {
+        setError(responseError.field as keyof CategoryItemType, {
           type: 'manual',
           message: responseError.message.join(', '),
         });
@@ -67,7 +67,7 @@ const CategoryModifyModal = ({
     onFailed?.(error.response?.data.message || 'Vui lòng thử lại sau');
   };
 
-  const handleCreateCategory = async (data: CategoryFormDataType) => {
+  const handleCreateCategory = async (data: CategoryItemType) => {
     return categoryService
       .createCategory(data)
       .then(() => {
@@ -77,8 +77,8 @@ const CategoryModifyModal = ({
       .catch(handleResponseError);
   };
 
-  const handleUpdateCategory = async (data: CategoryFormDataType) => {
-    if (!category) return null;
+  const handleUpdateCategory = async (data: CategoryItemType) => {
+    if (!category || !category.id) return null;
     return categoryService
       .updateCategoryById(category.id, data)
       .then(() => {
@@ -97,7 +97,7 @@ const CategoryModifyModal = ({
 
   useEffect(() => {
     if (!category || _.isEmpty(category)) {
-      setIsLoading(true);
+      setIsLoading(false);
       return;
     }
     setValue('name', category.name);
@@ -119,7 +119,7 @@ const CategoryModifyModal = ({
       {...props}
     >
       <form onSubmit={handleFinish} className="space-y-4 pb-2">
-        <div className="grid grid-cols-2 gap-x-6">
+        <div className="grid grid-cols-2 gap-x-6 gap-y-4">
           <InputGroup
             label="Tên danh mục"
             placeholder="Nhập tên danh mục"
@@ -128,9 +128,19 @@ const CategoryModifyModal = ({
             disabled={isLoading}
           />
           <InputGroup
+            label="SLUG"
+            placeholder="Nhập SLUG"
+            errorMessage={errors.slug?.message}
+            inputProps={{
+              ...register('slug'),
+            }}
+            disabled={isLoading}
+          />
+          <InputGroup
             type="select"
             label="Loại danh mục"
             placeholder="Chọn loại danh mục"
+            className="col-span-2"
             errorMessage={errors.type?.message}
             options={[
               {

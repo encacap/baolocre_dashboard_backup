@@ -92,10 +92,10 @@ const Category = () => {
   const formatDataSource = (dataSource: CategoryItemType[]): CategoryRenderedItemType[] =>
     dataSource.map((data) => ({
       ...data,
-      key: data.id,
-      type: getCategoryTypeNameByType(data.type),
-      image: <CategoryRowImage alt={data.name} src={getImageURLFromImage(data.image, 'thumbnail')} />,
-      actions: <CategoryRowAction id={data.id} onEdit={handleClickEdit} onDelete={handleClickDelete} />,
+      key: data.id || '',
+      type: getCategoryTypeNameByType(data.type || CategoryTypeEnum.ESTATE),
+      image: <CategoryRowImage alt={data.name || ''} src={getImageURLFromImage(data.image, 'thumbnail')} />,
+      actions: <CategoryRowAction id={data.id || ''} onEdit={handleClickEdit} onDelete={handleClickDelete} />,
     }));
 
   const getCategoryList = () => {
@@ -123,7 +123,7 @@ const Category = () => {
       return;
     }
     categoryService
-      .deleteCategoryById(selectedCategory.id)
+      .deleteCategoryById(selectedCategory.id || '')
       .then(() => {
         toast.success('Thành công!', 'Đã xóa danh mục');
         getCategoryList();
@@ -143,6 +143,11 @@ const Category = () => {
       return;
     }
     toast.error('Đã xảy ra lỗi khi thêm danh mục!', error);
+  };
+
+  const handleCloseModifyModal = () => {
+    setIsShowModifyModal(false);
+    setSelectedCategory(null);
   };
 
   useEffect(() => {
@@ -166,7 +171,7 @@ const Category = () => {
       <CategoryModifyModal
         isOpen={isShowModifyModal}
         category={selectedCategory}
-        onClose={() => setIsShowModifyModal(false)}
+        onClose={handleCloseModifyModal}
         onFinish={handleFinishModifyCategory}
         onFailed={handleModifyCategoryFailed}
       />
