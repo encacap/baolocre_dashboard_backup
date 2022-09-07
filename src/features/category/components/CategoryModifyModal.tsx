@@ -110,7 +110,7 @@ const CategoryModifyModal = ({
 
   return (
     <Modal
-      title="Thêm danh mục mới"
+      title={category ? 'Cập nhật danh mục' : 'Thêm danh mục mới'}
       size="xl"
       blockScrollOnMount
       isCentered
