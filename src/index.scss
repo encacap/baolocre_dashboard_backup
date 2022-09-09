@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+*:not(.normal_scrollbar) {
+  ::-webkit-scrollbar {
+    @apply w-4 bg-gray-100;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply rounded-full border-4 border-solid border-gray-100 bg-black bg-opacity-60 hover:bg-opacity-40;
+  }
+}
+
 .chakra-toast__inner {
   padding-bottom: 0 !important;
   margin-bottom: 0 !important;
