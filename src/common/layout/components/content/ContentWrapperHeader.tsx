@@ -9,7 +9,7 @@ const ContentWrapperHeader = ({ className, children }: ContentWrapperHeaderProps
   return (
     <div
       className={twMerge(
-        'mx-8 flex items-center justify-between border-b-2 border-gray-100 pt-7 pb-6 text-xl font-semibold text-teal-600',
+        'mx-8 flex h-20 items-center justify-between border-b-2 border-gray-100 text-xl font-semibold text-teal-600',
         className,
       )}
     >
