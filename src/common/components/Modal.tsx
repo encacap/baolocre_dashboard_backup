@@ -14,7 +14,7 @@ const Modal = ({ title, children, ...props }: ModalProps) => {
   return (
     <ChakraModal {...props}>
       <ModalOverlay />
-      <ModalContent className="py-6 px-7" overflow="visible">
+      <ModalContent className="my-auto py-6 px-7" overflow="visible">
         <div className="mb-6 flex items-center justify-between">
           <div className="text-lg font-semibold text-teal-600">
             {title}

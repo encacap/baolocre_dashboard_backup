@@ -12,6 +12,12 @@
   }
 }
 
+.chakra-modal__content-container {
+  *::-webkit-scrollbar {
+    @apply hidden;
+  }
+}
+
 .chakra-toast__inner {
   padding-bottom: 0 !important;
   margin-bottom: 0 !important;

@@ -1,20 +1,18 @@
-import { CategoryItemType } from '../../../app/types/category';
+import { ContactDataType } from '../../../app/types/contact';
 
 interface ContactDeleteConfirmationModalDescriptionProps {
-  category: CategoryItemType | null;
+  contact: ContactDataType | null;
 }
 
 const ContactDeleteConfirmationModalDescription = ({
-  category,
+  contact,
 }: ContactDeleteConfirmationModalDescriptionProps) => {
   return (
     <div>
       <div>
-        Bạn có chắc muốn xóa danh mục <b>{category?.name}</b>?
+        Bạn có chắc muốn xóa liên hệ <b>{contact?.name}</b>?
       </div>
-      <div className="mt-1">
-        Thao tác này không thê hoàn tác. Tất cả các bài viết thuộc danh mục này sẽ bị xóa.
-      </div>
+      <div className="mt-1">Thao tác này không thể hoàn tác.</div>
     </div>
   );
 };
