@@ -7,6 +7,7 @@ import useSelector from '../../common/hooks/useSelector';
 import Layout from '../../common/layout/Layout';
 import CategoryRoutes from '../../features/category/routes/CategoryRoutes';
 import ConfigRoutes from '../../features/config/routes/ConfigRoutes';
+import ContactRoutes from '../../features/contact/routes/ContactRoutes';
 import EstateRoutes from '../../features/estate/routes/EstateRoutes';
 import { AUTHENTICATION_PATH } from '../constants/URL';
 import { userService } from '../services';
@@ -57,6 +58,7 @@ const ProtectedRoutes = () => {
             <Route path="configs/*" element={<ConfigRoutes />} />
             <Route path="estates/*" element={<EstateRoutes />} />
             <Route path="categories/*" element={<CategoryRoutes />} />
+            <Route path="contacts/*" element={<ContactRoutes />} />
           </Routes>
         </Layout>
       )}

@@ -1,5 +1,5 @@
 import { Box, BoxProps, Flex, Icon } from '@chakra-ui/react';
-import { Bookmark, Element3, Firstline, Setting3 } from 'iconsax-react';
+import { Bookmark, Element3, Firstline, Setting3, UserSquare } from 'iconsax-react';
 import { SidebarMenuItemsType as SidebarMenuItemType } from '../../../../app/types/common';
 import EncacapLogo from '../../../components/EncacapLogo';
 import SidebarMenu from './SidebarMenu';
@@ -15,6 +15,12 @@ const Sidebar = ({ w }: SidebarProps) => {
       icon: <Icon as={Element3} />,
       label: 'Tổng quan',
       path: '/',
+    },
+    {
+      key: 'contact',
+      icon: <Icon as={UserSquare} />,
+      label: 'Quản lý liên hệ',
+      path: '/contacts',
     },
     {
       key: 'category',
