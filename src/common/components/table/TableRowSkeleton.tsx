@@ -7,7 +7,7 @@ interface TableRowSkeletonProps {
 }
 
 const TableRowSkeleton = ({ columns }: TableRowSkeletonProps) => {
-  const rowArray = Array.from({ length: 5 }, (_, index) => index);
+  const rowArray = Array.from({ length: 3 }, (_, index) => index);
 
   return (
     <Tbody>
