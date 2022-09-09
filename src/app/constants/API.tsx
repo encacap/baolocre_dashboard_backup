@@ -11,3 +11,7 @@ export const IMAGE_API_PATH = {
   UPLOAD_IMAGE_PATH: 'images/upload/single',
   UPLOAD_IMAGE_MULTIPLE_PATH: 'images/upload/multiple',
 };
+
+export const CONTACT_API_PATH = {
+  CONTACT_PATH: 'contacts',
+};
